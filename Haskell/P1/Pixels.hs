@@ -1,7 +1,8 @@
-module Pixels (all) where
+module Pixels where
 import Data.List
 import Data.Char
 import Data.Bits
+import Text.Printf
 
 fontBitmap =
   [
@@ -110,20 +111,20 @@ convertirInt :: Int->[Char]
 convertirInt a = probarBits a 6
                   
 probarBits :: Int->Int->[Char]
-probarBits a 0 = (probarBit a 0):[]
-probarBits a n  = (probarBit a n):(probarBits a (n-1))
+probarBits a 0 = probarBit a 0:[]
+probarBits a n = probarBit a n:probarBits a (n-1)
+
+getFontBit a = last (take (ord a - 31) fontBitmap)
 
 
-convertir :: [Int]->[[Char]]
-convertir [] = []
-convertir (x:xs) = convertirInt x : convertir xs
- 
+font :: Char -> Pixels
+font a = if 32 <= ord a && ord a <= 125
+	    then reverse (transpose( map convertirInt (getFontBit a)))
+     else reverse (transpose( map convertirInt ([0xFF, 0xFF, 0xFF, 0xFF,0xFF])))
 
-font a = if 32 <= ord (a) && ord (a) <= 125
-		  then convertir (last (take (ord (a) - 31) fontBitmap )) 
-    else convertir([0xFF, 0xFF, 0xFF, 0xFF,0xFF] )
+     
 
-pixelsToString = undefined
+pixelsToString a = concat (intersperse "\n" a)
 pixelListToPixels = undefined
 pixelListToString = undefined
 
