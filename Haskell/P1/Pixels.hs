@@ -119,7 +119,9 @@ convertir [] = []
 convertir (x:xs) = convertirInt x : convertir xs
  
 
-font a  = convertir (last (take (ord (a) - 31) fontBitmap ))
+font a = if 32 <= ord (a) && ord (a) <= 125
+		  then convertir (last (take (ord (a) - 31) fontBitmap )) 
+    else convertir([0xFF, 0xFF, 0xFF, 0xFF,0xFF] )
 
 pixelsToString = undefined
 pixelListToPixels = undefined
