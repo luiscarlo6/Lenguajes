@@ -1,4 +1,4 @@
-module Pixels where
+module Pixels (all) where
 import Data.List
 import Data.Char
 import Data.Bits
