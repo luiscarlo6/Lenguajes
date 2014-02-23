@@ -1,6 +1,7 @@
 module Pixels where
 import Data.List
 import Data.Char
+import Data.Bits
 
 fontBitmap =
   [
@@ -101,8 +102,18 @@ fontBitmap =
   ]
   
 type Pixels = [String]
-  
-font = last (take (ord (a) - 31) fontBitmap )
+
+probarBit :: Int->Int->Char
+probarBit a n = if testBit a n == True then '*' else ' '
+
+convertirInt :: Int->[Char]
+convertirInt a = probarBits a 6
+                  
+probarBits :: Int->Int->[Char]
+probarBits a 0 = (probarBit a 0):[]
+probarBits a n  = (probarBit a n):(probarBits a (n-1))
+
+font a  = last (take (ord (a) - 31) fontBitmap )
 
 pixelsToString = undefined
 pixelListToPixels = undefined
