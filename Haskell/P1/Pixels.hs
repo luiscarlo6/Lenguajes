@@ -1,4 +1,6 @@
-module Pixels (...) where
+module Pixels where
+import Data.List
+import Data.Char
 
 fontBitmap =
   [
@@ -98,7 +100,9 @@ fontBitmap =
     [ 0x00, 0x41, 0x36, 0x08, 0x00 ]  --  }
   ]
   
-font = undefined
+type Pixels = [String]
+  
+font = last (take (ord (a) - 31) fontBitmap )
 
 pixelsToString = undefined
 pixelListToPixels = undefined
