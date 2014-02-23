@@ -122,8 +122,10 @@ alfabeto [] = []
 alfabeto (x:xs) = reverse (transpose( map convertirInt (x))):alfabeto xs
 
 pixelsToString a = concat (intersperse "\n" a)
-pixelListToPixels = undefined
-pixelListToString = undefined
+
+pixelListToPixels a = concat (intersperse [""] a)
+
+pixelListToString a  = pixelsToString (concat a) 
 
 concatPixels = undefined
 messageToPixels = undefined
