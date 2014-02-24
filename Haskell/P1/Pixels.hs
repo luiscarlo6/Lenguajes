@@ -10,8 +10,8 @@ type Pixels = [String]
 font :: Char -> Pixels
 font a = 
   let
-	 fontBitmap =
-	   [
+	fontBitmap =
+          [
 		[ 0x00, 0x00, 0x00, 0x00, 0x00 ], --  (space)
 		[ 0x00, 0x00, 0x5F, 0x00, 0x00 ], --  !
 		[ 0x00, 0x07, 0x00, 0x07, 0x00 ], --  "
@@ -106,29 +106,26 @@ font a =
 		[ 0x00, 0x08, 0x36, 0x41, 0x00 ], --  {
 		[ 0x00, 0x00, 0x7F, 0x00, 0x00 ], --  |
 		[ 0x00, 0x41, 0x36, 0x08, 0x00 ]  --  }
-	   ]
+          ]
 	   
-	 probarBit :: Int->Int->Char
-	 probarBit a n = if testBit a n == True then '*' else ' '
+        probarBit :: Int->Int->Char
+	probarBit a n = if testBit a n == True then '*' else ' '
 	 
-	 convertirInt :: Int->String
-	 convertirInt a = probarBits a 6
+	convertirInt :: Int->String
+	convertirInt a = probarBits a 6
 	 
-	 probarBits :: Int->Int->String
-	 probarBits a 0 = probarBit a 0:[]
-	 probarBits a n = probarBit a n:probarBits a (n-1)
+	probarBits :: Int->Int->String
+	probarBits a 0 = probarBit a 0:[]
+        probarBits a n = probarBit a n:probarBits a (n-1)
 	 
-	 getFontBit :: Char -> [Int]
-	 getFontBit a = last (take (ord a -31) fontBitmap)
+	getFontBit :: Char -> [Int]
+	getFontBit a = last (take (ord a -31) fontBitmap)
+  
   in 
     if 32 <= ord a && ord a <= 125
-	 then reverse (transpose( map convertirInt (getFontBit a)))
-    else reverse (transpose( map convertirInt ([0xFF, 0xFF, 0xFF, 0xFF,0xFF])))
+	then reverse (transpose( map convertirInt (getFontBit a)))
+    else reverse (transpose( map convertirInt ([0xFF, 0xFF, 0xFF, 0xFF, 0xFF])))
    
-   
-   
-   -- alfabeto [] = []
-   -- alfabeto (x:xs) = reverse (transpose( map convertirInt (x))):alfabeto xs
    
 pixelsToString :: Pixels -> String
 pixelsToString a = concat (intersperse "\n" a)
@@ -140,10 +137,8 @@ pixelListToPixels a = concat (intersperse [""] a)
 
 pixelListToString :: [Pixels]->String
 pixelListToString a  = pixelsToString (concat a) 
---    
---    
---    
---    
+    
+
 --    concatPixels = undefined
 --    messageToPixels = undefined
 --    
