@@ -138,8 +138,12 @@ pixelListToPixels a = concat (intersperse [""] a)
 pixelListToString :: [Pixels]->String
 pixelListToString a  = pixelsToString (concat a) 
     
+                       
+concatPixels :: [Pixels] -> Pixels
+concatPixels [] = []
+concatPixels a = foldl1 (zipWith (++)) a 
 
---    concatPixels = undefined
+
 --    messageToPixels = undefined
 --    
 --    
