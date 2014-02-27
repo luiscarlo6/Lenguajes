@@ -3,10 +3,10 @@ module Pixels where
 import Data.Bits
 import Data.Char
 import Data.List
-import Data.String
-import Text.Printf
+
 
 type Pixels = [String]
+
 
 font :: Char -> Pixels
 font a = 
@@ -109,18 +109,18 @@ font a =
 		[ 0x00, 0x41, 0x36, 0x08, 0x00 ]  --  }
           ]
           
-	probarBit :: Int->Int->Char
-	probarBit a n = if testBit a n == True then '*' else ' '
+        probarBit :: Int->Int->Char
+	probarBit m n = if testBit m n == True then '*' else ' '
 	 
 	convertirInt :: Int->String
-	convertirInt a = probarBits a 6
+	convertirInt x = probarBits x 6
 	 
 	probarBits :: Int->Int->String
-	probarBits a 0 = probarBit a 0:[]
-        probarBits a n = probarBit a n:probarBits a (n-1)
+	probarBits b 0 = probarBit b 0:[]
+        probarBits b n = probarBit b n:probarBits b (n-1)
 	 
 	getFontBit :: Char -> [Int]
-	getFontBit a = last (take (ord a -31) fontBitmap)
+	getFontBit y = last (take (ord y -31) fontBitmap)
   
   in 
     if 32 <= ord a && ord a <= 125
@@ -159,18 +159,25 @@ messageToPixels [] = []
 messageToPixels a = 
   let 
     convertirEnPixels ::[Char] -> [Pixels]
-    convertirEnPixels a = map (extenFont) a
+    convertirEnPixels b = map (extenFont) b
 
 
     extenFont :: Char -> Pixels
-    extenFont a = map (++ " ") (font a)
+    extenFont x = map (++ " ") (font x)
   in
    map (init) (concatPixels (convertirEnPixels a))
 
 
 
+up :: Pixels -> Pixels
+up (x:xs) = xs ++ [x]
 
 
+down :: Pixels -> Pixels
+down a = reverse (up (reverse a))
+
+   
+   
 left :: Pixels -> Pixels
 left a = map moverIzq a
   where 
@@ -184,13 +191,16 @@ right :: Pixels -> Pixels
 right a =  map reverse (left (map reverse a))
 
 
-
-up :: Pixels -> Pixels
-up (x:xs) = xs ++ [x]
-
-
-down :: Pixels -> Pixels
-down a = reverse (up (reverse a))
+upsideDown :: Pixels -> Pixels
+upsideDown a = invertir a
+  where 
+    invertir :: Pixels -> Pixels
+    invertir [ ] = [ ]
+    invertir (x:xs) = (invertir xs)++[x]
+    
+    
+backwards :: Pixels -> Pixels
+backwards a = map reverse a
 
 
 
@@ -202,7 +212,3 @@ negative a = map negar a
     negar [] = []
     negar ('*':xs) = ' ':negar(xs)
     negar (' ':xs) = '*':negar(xs)
-
-
---    upsideDown = undefined
---    backwards = undefined
