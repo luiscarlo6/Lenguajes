@@ -169,21 +169,20 @@ messageToPixels a =
 
 
 
-moverIzq :: String -> String
-moverIzq [] = []
-moverIzq (x:xs) = xs ++ [x]
+
 
 left :: Pixels -> Pixels
 left a = map moverIzq a
+  where 
+    moverIzq :: String -> String
+    moverizq [] = []
+    moverIzq (x:xs) = xs ++ [x]
 
 
-
-moverDer :: String -> String
-moverDer [] = []
-moverDer a = reverse (moverIzq (reverse a))
 
 right :: Pixels -> Pixels
-right a = map moverDer a
+right a =  map reverse (left (map reverse a))
+
 
 
 up :: Pixels -> Pixels
@@ -194,14 +193,15 @@ down :: Pixels -> Pixels
 down a = reverse (up (reverse a))
 
 
-negar :: String -> String
-negar [] = []
-negar ('*':xs) = ' ':negar(xs)
-negar (' ':xs) = '*':negar(xs)
 
 
 negative :: Pixels -> Pixels
 negative a = map negar a
+  where
+    negar :: String -> String
+    negar [] = []
+    negar ('*':xs) = ' ':negar(xs)
+    negar (' ':xs) = '*':negar(xs)
 
 
 --    upsideDown = undefined
