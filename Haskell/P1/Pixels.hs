@@ -108,8 +108,8 @@ font a =
 		[ 0x00, 0x00, 0x7F, 0x00, 0x00 ], --  |
 		[ 0x00, 0x41, 0x36, 0x08, 0x00 ]  --  }
           ]
-	   
-        probarBit :: Int->Int->Char
+          
+	probarBit :: Int->Int->Char
 	probarBit a n = if testBit a n == True then '*' else ' '
 	 
 	convertirInt :: Int->String
@@ -167,12 +167,42 @@ messageToPixels a =
   in
    map (init) (concatPixels (convertirEnPixels a))
 
-    
---    up = undefined
---    down = undefined
---    left = undefined
---    right = undefined
+
+
+moverIzq :: String -> String
+moverIzq [] = []
+moverIzq (x:xs) = xs ++ [x]
+
+left :: Pixels -> Pixels
+left a = map moverIzq a
+
+
+
+moverDer :: String -> String
+moverDer [] = []
+moverDer a = reverse (moverIzq (reverse a))
+
+right :: Pixels -> Pixels
+right a = map moverDer a
+
+
+up :: Pixels -> Pixels
+up (x:xs) = xs ++ [x]
+
+
+down :: Pixels -> Pixels
+down a = reverse (up (reverse a))
+
+
+negar :: String -> String
+negar [] = []
+negar ('*':xs) = ' ':negar(xs)
+negar (' ':xs) = '*':negar(xs)
+
+
+negative :: Pixels -> Pixels
+negative a = map negar a
+
+
 --    upsideDown = undefined
 --    backwards = undefined
---    negative = undefined
-   
