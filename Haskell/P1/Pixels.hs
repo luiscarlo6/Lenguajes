@@ -3,6 +3,7 @@ module Pixels where
 import Data.Bits
 import Data.Char
 import Data.List
+import Data.String
 import Text.Printf
 
 type Pixels = [String]
@@ -144,7 +145,14 @@ concatPixels [] = []
 concatPixels a = foldl1 (zipWith (++)) a 
 
 
---    messageToPixels = undefined
+convertir a = map (extenFont) a
+
+extenFont a = map (++ " ") (font a)
+
+
+
+messageToPixels [] = [] 
+messageToPixels a = concatPixels (convertir a)
 --    
 --    
 --    up = undefined
