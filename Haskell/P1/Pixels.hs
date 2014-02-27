@@ -143,14 +143,34 @@ concatPixels :: [Pixels] -> Pixels
 concatPixels [] = []
 concatPixels a = foldl1 (zipWith (++)) a 
 
+moverIzq :: String -> String
+moverIzq [] = []
+moverIzq (x:xs) = xs ++ [x]
+
+left :: Pixels -> Pixels
+left a = map moverIzq a 
+
+moverDer :: String -> String
+moverDer [] = []
+moverDer a = reverse (moverIzq (reverse a))
+
+right :: Pixels -> Pixels
+right a = map moverDer a
+
+up :: Pixels -> Pixels
+up (x:xs) = xs ++ [x]
+
+down :: Pixels -> Pixels
+down a = reverse (up (reverse a))
+
+negar :: String -> String
+negar [] = []
+negar ('*':xs) = ' ':negar(xs)
+negar (' ':xs) = '*':negar(xs)
+
+negative :: Pixels -> Pixels
+negative a = map negar a
 
 --    messageToPixels = undefined
---    
---    
---    up = undefined
---    down = undefined
---    left = undefined
---    right = undefined
 --    upsideDown = undefined
 --    backwards = undefined
---    negative = undefined
