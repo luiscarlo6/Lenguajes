@@ -128,33 +128,46 @@ font a =
     else reverse (transpose( map convertirInt ([0xFF, 0xFF, 0xFF, 0xFF, 0xFF])))
    
    
+         
+
 pixelsToString :: Pixels -> String
 pixelsToString a = concat (intersperse "\n" a)
+
 
 
 pixelListToPixels :: [Pixels]->Pixels
 pixelListToPixels a = concat (intersperse [""] a)
 
 
+
+
 pixelListToString :: [Pixels]->String
 pixelListToString a  = pixelsToString (concat a) 
     
                        
+
+
 concatPixels :: [Pixels] -> Pixels
 concatPixels [] = []
 concatPixels a = foldl1 (zipWith (++)) a 
 
 
-convertir a = map (extenFont) a
-
-extenFont a = map (++ " ") (font a)
 
 
-
+messageToPixels :: [Char] -> [[Char]]
 messageToPixels [] = [] 
-messageToPixels a = concatPixels (convertir a)
---    
---    
+messageToPixels a = 
+  let 
+    convertirEnPixels ::[Char] -> [Pixels]
+    convertirEnPixels a = map (extenFont) a
+
+
+    extenFont :: Char -> Pixels
+    extenFont a = map (++ " ") (font a)
+  in
+   map (init) (concatPixels (convertirEnPixels a))
+
+    
 --    up = undefined
 --    down = undefined
 --    left = undefined
