@@ -192,11 +192,8 @@ right a =  map reverse (left (map reverse a))
 
 
 upsideDown :: Pixels -> Pixels
-upsideDown a = invertir a
-  where 
-    invertir :: Pixels -> Pixels
-    invertir [ ] = [ ]
-    invertir (x:xs) = (invertir xs)++[x]
+upsideDown a = reverse a
+
     
     
 backwards :: Pixels -> Pixels
