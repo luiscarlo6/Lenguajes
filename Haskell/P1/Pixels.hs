@@ -120,7 +120,7 @@ font a =
         probarBits b n = probarBit b n:probarBits b (n-1)
 	 
 	getFontBit :: Char -> [Int]
-	getFontBit y = last (take (ord y -31) fontBitmap)
+	getFontBit y = fontBitmap !! (ord y - 32)
   
   in 
     if 32 <= ord a && ord a <= 125
@@ -209,3 +209,5 @@ negative a = map negar a
     negar [] = []
     negar ('*':xs) = ' ':negar(xs)
     negar (' ':xs) = '*':negar(xs)
+
+
