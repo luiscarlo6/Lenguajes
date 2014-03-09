@@ -170,6 +170,7 @@ messageToPixels a =
 
 
 up :: Pixels -> Pixels
+up [] = []
 up (x:xs) = xs ++ [x]
 
 
@@ -182,7 +183,7 @@ left :: Pixels -> Pixels
 left a = map moverIzq a
   where 
     moverIzq :: String -> String
-    moverizq [] = []
+    moverIzq [] = []
     moverIzq (x:xs) = xs ++ [x]
 
 
