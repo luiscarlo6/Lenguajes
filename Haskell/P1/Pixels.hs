@@ -208,7 +208,10 @@ negative a = map negar a
   where
     negar :: String -> String
     negar [] = []
-    negar ('*':xs) = ' ':negar(xs)
-    negar (' ':xs) = '*':negar(xs)
+    negar (x:xs) = if x == '*' 
+                   then ' ':negar(xs) 
+                   else '*':negar(xs)
+                        
+
 
 
