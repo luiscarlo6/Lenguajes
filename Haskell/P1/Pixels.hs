@@ -206,8 +206,12 @@ backwards a = map reverse a
 negative :: Pixels -> Pixels
 negative a = map negar a
   where
+    
+    negarBit :: Char -> Char
+    negarBit b = if b == '*' 
+                 then ' ' 
+                 else '*'
+    
     negar :: String -> String
     negar [] = []
-    negar (x:xs) = if x == '*' 
-                   then ' ':negar(xs) 
-                   else '*':negar(xs)
+    negar s = map negarBit s 
