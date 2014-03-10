@@ -172,10 +172,10 @@ messageToPixels a =
 up :: Pixels -> Pixels
 up [] = []
 up (x:xs) = xs ++ [x]
-
+ 
 
 down :: Pixels -> Pixels
-down a = reverse (up (reverse a))
+down a =  last a : init a
 
   
   
