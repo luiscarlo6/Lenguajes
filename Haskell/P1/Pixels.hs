@@ -1,4 +1,6 @@
-module Pixels where
+module Pixels (Pixels, font, pixelsToString, pixelListToPixels,
+               pixelListToString, concatPixels, messageToPixels, up, down,
+               left, right, upsideDown, backwards, negative ) where
 
 import Data.Bits
 import Data.Char
