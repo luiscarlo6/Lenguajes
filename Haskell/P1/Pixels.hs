@@ -156,11 +156,11 @@ concatPixels a = foldl1 (zipWith (++)) a
 
 
 
-messageToPixels :: [Char] -> [[Char]]
+messageToPixels :: String -> Pixels
 messageToPixels [] = [] 
 messageToPixels a = 
   let 
-    convertirEnPixels ::[Char] -> [Pixels]
+    convertirEnPixels :: String -> [Pixels]
     convertirEnPixels b = map (extenFont) b
 
 
