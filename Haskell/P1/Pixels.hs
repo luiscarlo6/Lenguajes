@@ -243,18 +243,18 @@ backwards :: Pixels -> Pixels
 backwards a = map reverse a
 
 
--- | Intercambia los @' '@ por @'*'@ en un @Pixels@
+-- | Intercambia los @' '@ por @'*'@ en un @Pixels@ y viceversa
 negative :: Pixels -> Pixels
 negative a = map negar a
   where
     
-    -- | Intercambia @' '@ por @'*'@ y viceversa
+    -- | Cambia @' '@ por @'*'@ y viceversa en un @Char@
     negarBit :: Char -> Char
     negarBit b = if b == '*' 
                  then ' ' 
                  else '*'
     
-    -- | Usa la función @negarBit@ en un String 
+    -- | Cambia @' '@ por @'*'@ y viceversa en cada elemento de un @String@
     negar :: String -> String
     negar [] = []
     negar s = map negarBit s 
