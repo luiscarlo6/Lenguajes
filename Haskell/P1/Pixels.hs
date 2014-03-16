@@ -197,7 +197,7 @@ messageToPixels [] = []
 messageToPixels a = 
   let
     
-    -- | Convierte un @String@ a una lista de @Pixels@ con
+    -- | Convierte un @String@ a una lista de @Pixels@
     convertirEnPixels ::String -> [Pixels]
     convertirEnPixels b = map (extenFont) b
 
