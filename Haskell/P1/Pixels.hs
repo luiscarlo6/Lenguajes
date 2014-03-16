@@ -155,7 +155,6 @@ font a =
         
 -- | Convierte un valor del tipo @Pixels@ en un @String@, con saltos
 -- de línea en medio de los elemtos individuales del @Pixels@
-
 pixelsToString :: Pixels -> String
 pixelsToString a = concat (intersperse "\n" a)
 
