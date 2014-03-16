@@ -1,10 +1,10 @@
 {-| 
   Module      : Pixels
   Copyright   : Universidad Simón Bolívar
-  Maintainer  :  Luiscarlo Rivera (O9-11020) 
-                 & José Julián Prado (09-11006)
-                 & Grupo 9 Taller de Lenguajes de Programación I (CI-3661) 
-                 Entrega: Proyecto # 1
+  Maintainer  : Luiscarlo Rivera (09-11020) 
+                & José Julián Prado (09-11006)
+                & Grupo 9 Taller de Lenguajes de Programación I (CI-3661) 
+                Entrega: Proyecto # 1
                  
   Módulo que genera Pixels Display de todos los caracteres imprimibles de la
   tabla ASCII
@@ -40,7 +40,7 @@ type Pixels = [String]
 font :: Char -> Pixels
 font a = 
   let
-    -- | Mapa de bits de carácteres imprimibles de la tabla ASCII
+    -- | Mapa de bits de caracteres imprimibles de la tabla ASCII
     fontBitmap =
       [
         [ 0x00, 0x00, 0x00, 0x00, 0x00 ], --  (space)
@@ -145,18 +145,18 @@ font a =
     probarBit i n = if testBit i n == True then '*' else ' '
     
     -- | Convierte un @Int@ desde su sexto bit mas representativo
-    -- a un @String@ de @' '@ y @'*'@ segun esten encedidos o apagados
+    -- a un @String@ de @' '@ y @'*'@ según estén encendidos o apagados
     convertirInt :: Int->String
     convertirInt x = probarBits x 6
     
-    -- | Convierte un entero a una cadena de carácteres de 
+    -- | Convierte un entero a una cadena de caracteres de 
     -- @'*'@ y @' '@ según sus bits, comenzando por el bit @n@
     probarBits :: Int->Int->String
     probarBits b 0 = probarBit b 0:[]
     probarBits b n = probarBit b n:probarBits b (n-1)
       
     -- |Dado un carácter imprimible en la tabla ASCII, retorna su
-    -- reporesentación en el @fontBitmap@
+    -- representación en el @fontBitmap@
     getFontBit :: Char -> [Int]
     getFontBit y = fontBitmap !! (ord y - 32)
   
@@ -168,13 +168,13 @@ font a =
   
         
 -- | Convierte un valor del tipo @Pixels@ en un @String@, con saltos
--- de línea en medio de los elemtos individuales del @Pixels@
+-- de línea en medio de los elementos individuales del @Pixels@
 pixelsToString :: Pixels -> String
 pixelsToString a = concat (intersperse "\n" a)
 
 
 -- | Convierte una lista de @Pixels@ en un valor de @Pixels@ 
--- que lo represente con un @String@ vacio entre ambos
+-- que lo represente con un @String@ vacío entre ambos
 pixelListToPixels :: [Pixels]->Pixels
 pixelListToPixels a = concat (intersperse [""] a)
 
@@ -189,7 +189,7 @@ pixelListToString a  = pixelsToString (concat a)
 
 -- | Convierte una lista de @Pixels@ en un solo valor
 -- de @Pixels@ concatenando de forma horizontal y sin 
--- espacios etre cada @Pixels@ de la entrada
+-- espacios entre cada @Pixels@ de la entrada
 concatPixels :: [Pixels] -> Pixels
 concatPixels [] = []
 concatPixels a = foldl1 (zipWith (++)) a 
@@ -230,7 +230,7 @@ left :: Pixels -> Pixels
 left a = map moverIzq a
   where 
     
-    -- | Mueve a la izquierda un @String@, (Pone de ultimo el primer caracter)
+    -- | Mueve a la izquierda un @String@, (Pone de ultimo el primer carácter)
     moverIzq :: String -> String
     moverIzq [] = []
     moverIzq (x:xs) = xs ++ [x]
