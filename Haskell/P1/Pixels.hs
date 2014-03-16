@@ -1,18 +1,32 @@
-module Pixels (Pixels, font, pixelsToString, pixelListToPixels,
-               pixelListToString, concatPixels, messageToPixels, up, down,
-               left, right, upsideDown, backwards, negative ) where
+{-| 
+  Implementación del módulo Pixels dado por el prof Ernesto Hernández. Realizado por:
+  José Prado       09-11006
+  Luiscarlo Rivera 09-11020
+-}
+module Pixels (
+  -- * Tipo @Pixels@
+  Pixels, 
+  
+  -- * Operaciones del módulo @Pixels@
+  font, pixelsToString, pixelListToPixels, pixelListToString, 
+  concatPixels, messageToPixels, up, down, left, right, upsideDown, 
+  backwards, negative 
+  
+  ) where
+
 
 import Data.Bits
 import Data.Char
 import Data.List
 
-
+-- | Una lista de @String@ donde cada carácter representa un led de un @Display@
 type Pixels = [String]
 
-
+-- | Crea un @Pixels@ a partir de un carácter imprimible de la tabla ASCII
 font :: Char -> Pixels
 font a = 
   let
+    -- | Mapa de bits de carácteres imprimibles de la tabla ASCII
     fontBitmap =
       [
         [ 0x00, 0x00, 0x00, 0x00, 0x00 ], --  (space)
@@ -109,18 +123,26 @@ font a =
         [ 0x00, 0x08, 0x36, 0x41, 0x00 ], --  {
         [ 0x00, 0x00, 0x7F, 0x00, 0x00 ], --  |
         [ 0x00, 0x41, 0x36, 0x08, 0x00 ]  --  }
-      ]
-          
+      ] 
+    
+    -- | Revisa el bit @n@ del argumento @i@. Si está encendido
+    -- retorna @True@, caso contrario retorna @False@
     probarBit :: Int->Int->Char
-    probarBit m n = if testBit m n == True then '*' else ' '
-      
+    probarBit i n = if testBit i n == True then '*' else ' '
+    
+    -- | Convierte un @Int@ desde su sexto bit mas representativo
+    -- a un @String@ de @' '@ y @'*'@ segun esten encedidos o apagados
     convertirInt :: Int->String
     convertirInt x = probarBits x 6
-
+    
+    -- | Convierte un entero a una cadena de carácteres de 
+    -- @'*'@ y @' '@ según sus bits, comenzando por el bit @n@
     probarBits :: Int->Int->String
     probarBits b 0 = probarBit b 0:[]
     probarBits b n = probarBit b n:probarBits b (n-1)
       
+    -- |Dado un carácter imprimible en la tabla ASCII, retorna su
+    -- reporesentación en el @fontBitmap@
     getFontBit :: Char -> [Int]
     getFontBit y = fontBitmap !! (ord y - 32)
   
@@ -131,36 +153,43 @@ font a =
   
   
         
+-- | Convierte un valor del tipo @Pixels@ en un @String@, con saltos
+-- de línea en medio de los elemtos individuales del @Pixels@
 
 pixelsToString :: Pixels -> String
 pixelsToString a = concat (intersperse "\n" a)
 
 
-
+-- | Convierte una lista de @Pixels@ en un valor de @Pixels@ 
+-- que lo represente con un @String@ vacio entre ambos
 pixelListToPixels :: [Pixels]->Pixels
 pixelListToPixels a = concat (intersperse [""] a)
 
 
 
-
+-- | Convierte una lista de @Pixels@ en un @String@ con
+-- saltos de linea en medio
 pixelListToString :: [Pixels]->String
 pixelListToString a  = pixelsToString (concat a) 
     
                       
 
-
+-- | Convierte una lista de @Pixels@ en un solo valor
+-- de @Pixels@ concatenando de forma horizontal y sin 
+-- espacios etre cada @Pixels@ de la entrada
 concatPixels :: [Pixels] -> Pixels
 concatPixels [] = []
 concatPixels a = foldl1 (zipWith (++)) a 
 
 
 
-
-messageToPixels :: [Char] -> [[Char]]
+-- | Convierte un @String@ a @Pixels@ agregando un
+-- espacio en blanco entre cada carácter de la entrada
+messageToPixels :: String -> Pixels
 messageToPixels [] = [] 
 messageToPixels a = 
-  let 
-    convertirEnPixels ::[Char] -> [Pixels]
+  let
+    convertirEnPixels ::String -> [Pixels]
     convertirEnPixels b = map (extenFont) b
 
 
@@ -170,41 +199,44 @@ messageToPixels a =
     map (init) (concatPixels (convertirEnPixels a))
 
 
-
+-- | Desplaza una hilera de un @Pixels@ hacia arriba
 up :: Pixels -> Pixels
 up [] = []
 up (x:xs) = xs ++ [x]
  
-
+-- | Desplaza una hilera de un @Pixels@ hacia abajo
 down :: Pixels -> Pixels
 down a =  last a : init a
 
   
-  
+-- | Desplaza una columna de @Pixels@ hacia la izquierda
 left :: Pixels -> Pixels
 left a = map moverIzq a
   where 
+    
+    -- | Mueve a la izquierda un @String@, (Pone de ultimo el primer caracter)
     moverIzq :: String -> String
     moverIzq [] = []
     moverIzq (x:xs) = xs ++ [x]
 
 
-
+-- | Desplaza una columna de @Pixels@ hacia la derecha
 right :: Pixels -> Pixels
 right a =  map reverse (left (map reverse a))
 
 
+
+-- | Invierte el orden de las filas de un @Pixels@ 
 upsideDown :: Pixels -> Pixels
 upsideDown a = reverse a
 
     
-    
+-- | Invierte el orden de las columnas de un @Pixels@    
 backwards :: Pixels -> Pixels
 backwards a = map reverse a
 
 
-
-
+-- | Intercambia los @' '@ por @'*'@ en un @Pixels@
 negative :: Pixels -> Pixels
 negative a = map negar a
   where
