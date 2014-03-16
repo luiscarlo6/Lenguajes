@@ -7,9 +7,17 @@ module Pixels (
   -- * Tipo @Pixels@
   Pixels, 
   
-  -- * Operaciones del módulo @Pixels@
-  font, pixelsToString, pixelListToPixels, pixelListToString, 
-  concatPixels, messageToPixels, up, down, left, right, upsideDown, 
+  -- * Tipografía desde mapa de bits
+  font, 
+  
+  -- * Mostrar @Pixels@ en pantalla
+  pixelsToString, pixelListToPixels, pixelListToString, 
+  
+  -- * Combinadores
+  concatPixels, messageToPixels, 
+  
+  -- * Efectos especiales 
+  up, down, left, right, upsideDown, 
   backwards, negative 
   
   ) where
@@ -240,11 +248,13 @@ negative :: Pixels -> Pixels
 negative a = map negar a
   where
     
+    -- | Intercambia @' '@ por @'*'@ y viceversa
     negarBit :: Char -> Char
     negarBit b = if b == '*' 
                  then ' ' 
                  else '*'
     
+    -- | Usa la función @negarBit@ en un String 
     negar :: String -> String
     negar [] = []
     negar s = map negarBit s 
