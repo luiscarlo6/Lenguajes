@@ -1,7 +1,12 @@
 {-| 
-  Implementación del módulo Pixels dado por el prof Ernesto Hernández. Realizado por:
-  José Prado       09-11006
-  Luiscarlo Rivera 09-11020
+  Module      : Pixels
+  Copyright   : Universidad Simón Bolívar
+  Maintainer  :  LuisCarlo Rivera (O9-11020) 
+                 & José Julián Prado (09-11006)
+                 & Grupo 9 Taller de Lenguajes de Programación I (CI-3661)
+                 
+  Módulo que genera Pixels Display de todos los caracteres imprimibles de la
+  tabla ASCII
 -}
 module Pixels (
   -- * Tipo @Pixels@
