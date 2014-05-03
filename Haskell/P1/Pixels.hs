@@ -1,7 +1,7 @@
 {-| 
   Module      : Pixels
   Copyright   : Universidad Simón Bolívar
-  Maintainer  :  LuisCarlo Rivera (O9-11020) 
+  Maintainer  :  Luiscarlo Rivera (O9-11020) 
                  & José Julián Prado (09-11006)
                  & Grupo 9 Taller de Lenguajes de Programación I (CI-3661)
                  
