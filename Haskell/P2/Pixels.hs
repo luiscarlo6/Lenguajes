@@ -13,7 +13,8 @@ font m c = pix $ DM.lookup c m
                           else Pixels G.White [[]]
 
 oldPixelsToPixels :: [String] -> Pixels
-oldPixelsToPixels s = Pixels G.White $ map (\st -> map (\x -> if x ==' ' then Pixel False else Pixel True) st) s
+--oldPixelsToPixels s = Pixels G.White $ map (\st -> map (\x -> if x ==' ' then Pixel False else Pixel True) st) s
+oldPixelsToPixels s = Pixels G.White $ map (\st -> map (\x -> Pixel (x=='*')) st) s
 
 
 -- | Convierte una lista de @Pixels@ en un valor de @Pixels@ 
@@ -65,7 +66,7 @@ backwards (Pixels c a) = Pixels c $ map reverse a
 
 -- | Intercambia los @' '@ por @'*'@ en un @Pixels@ y viceversa
 negative :: Pixels -> Pixels
-negative (Pixels c a) = Pixels c $ map (\ l -> map (\ (Pixel p) -> if p == True then  Pixel False else Pixel True) l ) a
+negative (Pixels c a) = Pixels c $ map (\ l -> map (\ (Pixel p) -> Pixel (not p)) l ) a
 
 --variables de uso 
 a = oldPixelsToPixels [" *** ","*   *","*   *","*   *","*****","*   *","*   *"]
