@@ -1,66 +1,63 @@
-import qualified Data.List
-import qualified Data.Char
-import qualified Data.String
+import qualified Data.List as DL
+import qualified Data.Char as DC
 import qualified System.Environment as SE (getArgs) 
 
---palabra = "5 7\n\n\" \"\n     \n     \n     \n     \n     \n     \n     \n\n\"!\"\n  *  \n  *  \n  *  \n  *  \n  *  \n     \n  *  \n\n"
 
---palabraS = readFile "Prueba"
+mensajeLC = "\nError: Deben haber al menos dos archivos en la linea de comandos\n"
+mensajeAV = "\nError: El archivo font esta vacio\n"
+mensajeNN = "\nError: Los numeros suministrados en el archivo deben de ser positivos\n"
 
 
 main = do
   archivos <- SE.getArgs
-  --falta chequeo
-  fontEntrada <- readFile (head archivos) 
-  let prueba = salida (fontEntrada)
-  --print fontEntrada
-  print prueba
+  if DL.length archivos < 2 
+    then putStrLn mensajeLC --Caso error en la linea de comandos
+         
+    else do fontEntrada <- readFile (head archivos) 
+            --caso archivo font vacio
+            if DL.null fontEntrada 
+              then putStrLn mensajeAV
+                   
+              else do let numeros = obtenerNumeros (DL.head (DL.lines fontEntrada)) 
+                                    
+                      if not (DL.all (>0) numeros)
+                        then putStrLn mensajeNN
+                        
+                        else do let contenidoFont = salida(fontEntrada)
+
+                                print contenidoFont
 
 
 
 
+--obtengo los numeros que traen en el archivo
+obtenerNumeros n = map stringToInt (words n)
 
+--se le pasa el archivo font leido y lo procesa
 salida n = map (\(x,y)->(x,fst y))(procesar (read (last (words (head (lines n ))))::Int) ((dropWhile null $ tail $ lines n )))
 
-
-
+-- procesa el font
 procesar num [] = []
-procesar num ls = ((Data.List.head b),Data.List.splitAt num (Data.List.tail b) ) : procesar num (Data.List.dropWhile Data.List.null bs)
-  where (b,bs) = Data.List.break null ls
+procesar num ls = ((DL.head b),DL.splitAt num (DL.tail b) ) : procesar num (DL.dropWhile DL.null bs)
+  where (b,bs) = DL.break null ls
         
 
 
 
+--convertir un string numerico en numero
+stringToInt n = if DL.head n == '-' 
+                then (-1)*(convertirNum(map (DC.digitToInt) (tail n))) 
+                else convertirNum(map (DC.digitToInt) n)
+  where
+    --Llamo a convertirNumero pero con un solo argumento
+    convertirNum n = convertirNumero 0 n
 
-        
--- --fila = Data.List.last(stringToInt (Data.List.head (lines palabra)))
--- 
--- --columna = head . stringToInt
--- 
--- --convertir un string numerico en numero
--- stringToInt n = if Data.List.head n == '-' 
---                 then (-1)*(convertirNum(map (Data.Char.digitToInt) (tail n))) 
---                 else convertirNum(map (Data.Char.digitToInt) n)
---   where
---     --Llamo a convertirNumero pero con un solo argumento
---     convertirNum n = convertirNumero 0 n
--- 
---     --convertir una lista de enteros en su numeor equivalente ejemplo [1,0] = 10
---     convertirNumero n x = if Data.List.null x 
---                           then n 
---                           else convertirNumero (n +(((potenciaDiez ((Data.List.length x)-1) 1 )*(Data.List.head x)))) (Data.List.tail x)
--- 
---     --Obtengo la n-sima potencia de diez
---     potenciaDiez n r = if n == 0 
---                        then r 
---                        else potenciaDiez (n-1)(r * 10) 
---                        
---                        
+    --convertir una lista de enteros en su numeor equivalente ejemplo [1,0] = 10
+    convertirNumero n x = if DL.null x 
+                          then n 
+                          else convertirNumero (n +(((potenciaDiez ((DL.length x)-1) 1 )*(DL.head x)))) (DL.tail x)
 
---map (\(x,y)->(x,fst y))(procesar (read (last (words (head (lines palabra ))))::Int) ((dropWhile null $ tail $ lines palabra )))
---map (\(x,y)->(x,fst y))(procesar (read (last (words (head (lines palabra ))))::Int) ((dropWhile null $ tail $ lines palabra )))
-
--- main = do
---       n <- palabraS
---       x <- salida palabraS
---       print x
+    --Obtengo la n-sima potencia de diez
+    potenciaDiez n r = if n == 0 
+                       then r 
+                       else potenciaDiez (n-1)(r * 10) 
