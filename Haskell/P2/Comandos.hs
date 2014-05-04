@@ -1,10 +1,24 @@
 import qualified Data.List
 import qualified Data.Char
 import qualified Data.String
+import qualified System.Environment as SE (getArgs) 
 
-palabra = "5 7\n\n\" \"\n     \n     \n     \n     \n     \n     \n     \n\n\"!\"\n  *  \n  *  \n  *  \n  *  \n  *  \n     \n  *  \n\n"
+--palabra = "5 7\n\n\" \"\n     \n     \n     \n     \n     \n     \n     \n\n\"!\"\n  *  \n  *  \n  *  \n  *  \n  *  \n     \n  *  \n\n"
 
-palabraS = readFile "Prueba"
+--palabraS = readFile "Prueba"
+
+
+main = do
+  archivos <- SE.getArgs
+  --falta chequeo
+  fontEntrada <- readFile (head archivos) 
+  let prueba = salida (fontEntrada)
+  --print fontEntrada
+  print prueba
+
+
+
+
 
 salida n = map (\(x,y)->(x,fst y))(procesar (read (last (words (head (lines n ))))::Int) ((dropWhile null $ tail $ lines n )))
 
@@ -14,6 +28,10 @@ procesar num [] = []
 procesar num ls = ((Data.List.head b),Data.List.splitAt num (Data.List.tail b) ) : procesar num (Data.List.dropWhile Data.List.null bs)
   where (b,bs) = Data.List.break null ls
         
+
+
+
+
         
 -- --fila = Data.List.last(stringToInt (Data.List.head (lines palabra)))
 -- 
