@@ -1,15 +1,24 @@
 import qualified Data.List as DL
 import qualified Data.Char as DC
-import qualified System.Environment as SE (getArgs) 
+import qualified System.Environment as SE (getArgs)
+
 
 
 mensajeLC = "\nError: Deben haber al menos dos archivos en la linea de comandos\n"
 mensajeAV = "\nError: El archivo font esta vacio\n"
 mensajeNN = "\nError: Los numeros suministrados en el archivo deben de ser positivos\n"
 
+-- temp = "5 7\n\n\" \"\n     \n     \n     \n     \n     \n     \n     \n\n\"!\"\n  *  \n  *  \n  *  \n  *  \n  *  \n     \n  *  \n\n"
+-- 
+-- temp1 = ["\" \"","\"!\""]
+
 
 main = do
   archivos <- SE.getArgs
+--   aux <- readFile (head archivos)
+--   print aux
+  
+  
   if DL.length archivos < 2 
     then putStrLn mensajeLC --Caso error en la linea de comandos
          
@@ -23,7 +32,7 @@ main = do
                       if not (DL.all (>0) numeros)
                         then putStrLn mensajeNN
                         
-                        else do let contenidoFont = salida(fontEntrada)
+                        else do let contenidoFont = readFont(fontEntrada)
 
                                 print contenidoFont
 
@@ -34,15 +43,15 @@ main = do
 obtenerNumeros n = map stringToInt (words n)
 
 --se le pasa el archivo font leido y lo procesa
-salida n = map (\(x,y)->(x,fst y))(procesar (read (last (words (head (lines n ))))::Int) ((dropWhile null $ tail $ lines n )))
+readFont n = map (\(x,y)->(x,fst y))(procesar (read (last (words (head (lines n ))))::Int) ((dropWhile null $ tail $ lines n )))
 
 -- procesa el font
 procesar num [] = []
-procesar num ls = ((DL.head b),DL.splitAt num (DL.tail b) ) : procesar num (DL.dropWhile DL.null bs)
+procesar num ls = ((stringToChar(DL.head b)),DL.splitAt num (DL.tail b) ) : procesar num (DL.dropWhile DL.null bs)
   where (b,bs) = DL.break null ls
         
 
-
+stringToChar n = (\(x:_)->x)(DL.delete  '\"' (DL.delete  '\"' n))
 
 --convertir un string numerico en numero
 stringToInt n = if DL.head n == '-' 
