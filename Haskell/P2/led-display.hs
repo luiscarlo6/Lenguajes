@@ -7,10 +7,13 @@ import qualified System.Environment as SE (getArgs)
 mensajeLC = "\nError: Deben haber al menos dos archivos en la linea de comandos\n"
 mensajeAV = "\nError: El archivo font esta vacio\n"
 mensajeNN = "\nError: Los numeros suministrados en el archivo deben de ser positivos\n"
+mensajeNC = "\nError: Los tamaños de filas y columnas no corresponden\n"
 
--- temp = "5 7\n\n\" \"\n     \n     \n     \n     \n     \n     \n     \n\n\"!\"\n  *  \n  *  \n  *  \n  *  \n  *  \n     \n  *  \n\n"
--- 
--- temp1 = ["\" \"","\"!\""]
+temp = "5 7\n\n\" \"\n     \n     \n     \n     \n     \n     \n     \n\n\"!\"\n  *  \n  *  \n  *  \n  *  \n  *  \n     \n  *  \n\n"
+
+temp1 = ["\" \"","\"!\""]
+
+aux = [5,7]
 
 
 main = do
@@ -33,10 +36,15 @@ main = do
                         then putStrLn mensajeNN
                         
                         else do let contenidoFont = readFont(fontEntrada)
+                                --print numeros
+                                --print contenidoFont
+                                if not (validarTamaños (fromEnum(last numeros)) (fromEnum(head numeros)) contenidoFont ) 
+                                   then putStrLn mensajeNC
+                                   else print contenidoFont
 
-                                print contenidoFont
 
-
+--valida que el tamaño que representa los pixeles se corresponda
+validarTamaños fil colm cont =  all (\(w,x)-> (length x == fil) && (all (\w -> (length w == colm)) x) ) cont
 
 
 --obtengo los numeros que traen en el archivo
@@ -51,7 +59,20 @@ procesar num ls = ((stringToChar(DL.head b)),DL.splitAt num (DL.tail b) ) : proc
   where (b,bs) = DL.break null ls
         
 
-stringToChar n = (\(x:_)->x)(DL.delete  '\"' (DL.delete  '\"' n))
+
+        
+
+        
+        
+        
+        
+stringToChar n = (DL.delete  '\"' (DL.delete  '\"' n))--(\(x:_)->x)
+
+
+
+
+
+
 
 --convertir un string numerico en numero
 stringToInt n = if DL.head n == '-' 
