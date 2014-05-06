@@ -31,10 +31,11 @@ readFont n = do fontEntrada <- SIO.hGetContents n
                             if not (DL.all (>=0) numeros)
                               then error mensajeNN
                               
-                              else do let contenidoFont = map (\(x,y)->(x,fst y))(obtenerTuplas (last numeros ) ( dropWhile null $ tail $ lines fontEntrada ))
+                              else do let contenidoFont =remCont (map (\(x,y)->(x,fst y))(obtenerTuplas (last numeros ) ( dropWhile null $ tail $ lines fontEntrada )))
                                       --valida que los tamaños se correspondan
                                       if not (validarTam (last numeros) (head numeros) contenidoFont ) 
-                                          then error mensajeNC
+                                          then do print contenidoFont
+                                                  error mensajeNC
                                           --valida que los string tengan un solo caracter
                                           else if not (validarUnicidad contenidoFont) 
                                               then error mensajeMC
@@ -69,3 +70,13 @@ readFont n = do fontEntrada <- SIO.hGetContents n
     --eliminino los \" que vienen del archivo
     eliminarEspeciales :: [Char] -> [Char]
     eliminarEspeciales n = (DL.delete  '\"' (DL.delete  '\"' n))
+
+    --remueve caracteres de control
+    remCont :: [([Char], [[Char]])] -> [([Char], [[Char]])]
+    remCont n = map (\(x,y)-> ((removerControl x), (map (removerControl) y))) n
+      where
+        removerControl :: [Char] -> [Char]
+        removerControl [] = []
+        removerControl (x:xs) = if DC.isControl x 
+                            then removerControl (xs) 
+                            else x:removerControl(xs) 
