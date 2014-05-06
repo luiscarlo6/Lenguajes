@@ -2,6 +2,7 @@ import qualified Data.Map as DM
 import qualified Graphics.HGL as G
 import qualified Data.Maybe as M
 import qualified Data.List as DL
+import qualified System.IO as SIO
 
 data Pixels = Pixels { color :: G.Color, dots ::[[Pixel]] } deriving Show
 
@@ -67,3 +68,15 @@ backwards (Pixels c a) = Pixels c $ map reverse a
 -- | Intercambia los @' '@ por @'*'@ en un @Pixels@ y viceversa
 negative :: Pixels -> Pixels
 negative (Pixels c a) = Pixels c $ map (\ l -> map (\ (Pixel p) -> Pixel (not p)) l ) a
+
+-- readFont :: Handle -> IO (Map Char Pixels)
+-- readFont :: SIO.Handle -> IO Int
+-- readFont h = do f <- SIO.hGetContents h
+--                 let x = lines f
+--                 let col = read $ (words (head x)) !! 1
+--                 return col
+-- main = do 
+--           let file = "alfabeto"
+--           h <- SIO.openFile file SIO.ReadMode 
+          n <- readFont h
+
