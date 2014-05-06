@@ -16,7 +16,7 @@ main = do
         
     else do fontEntrada1 <- SIO.openFile (DL.head archivos) SIO.ReadMode
             x <- readFont fontEntrada1
-            print ( x)
+            print (x)
             --print "\n"
 
 readFont' :: SIO.Handle -> IO (DM.Map Char Pixels)

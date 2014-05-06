@@ -13,8 +13,14 @@ data Pixel = Pixel { on :: Bool } deriving (Show)
 
 font :: DM.Map Char Pixels -> Char -> Pixels
 font m c = pix $ DM.lookup c m
-          where pix may = if M.isJust may then M.fromJust may
-                          else Pixels G.White [[]]
+           where pix may = if M.isJust may then M.fromJust may
+                           else allOn $ snd $ DM.elemAt 0 m
+
+allOn :: Pixels -> Pixels
+allOn (Pixels c p) = Pixels c $ map (\ p1 -> map turnOn p1) $  p
+
+turnOn :: Pixel -> Pixel
+turnOn p = Pixel True
 
 oldPixelsToPixels :: [String] -> Pixels
 --oldPixelsToPixels s = Pixels G.White $ map (\st -> map (\x -> if x ==' ' then Pixel False else Pixel True) st) s
