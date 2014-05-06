@@ -19,6 +19,24 @@ main = do
             print ( x)
             --print "\n"
 
+readFont' :: SIO.Handle -> IO (DM.Map Char Pixels)
+readFont' n = do s <- SIO.hGetContents n
+                 if DL.null s then error "Archivo Vacio" else do
+                   let x = lines s
+                   let nums = getNums (head x)
+                   return $ DM.fromList $ getList (tail x) nums
+                     
+getNums a = map read $ words a
+
+getList :: [String] -> [Int] -> [(Char,Pixels)]
+getList l [f,c] = if (ys == []) then [(x,oldPixelsToPixels (tail xs))]
+                                else [(x,oldPixelsToPixels (tail xs))] ++ (getList ys [f,c])
+
+                    where
+                      (xs, ys) = splitAt (c+1) l
+                      x = head $ tail $ head xs
+
+
 
 readFont :: SIO.Handle -> IO (DM.Map Char Pixels)
 readFont n = do fontEntrada <- SIO.hGetContents n
@@ -54,7 +72,7 @@ readFont n = do fontEntrada <- SIO.hGetContents n
     --valida que el tamaño que representa los pixeles se corresponda
     validarTam :: Int -> Int -> [(t, [[a]])] -> Bool
     validarTam fil colm cont =  all (\(w,x)-> (length x == fil) && (all (\w -> (length w == colm)) x) ) cont
-
+    
 
     --obtengo los numeros que traen en el archivo
     --Y valido que no vengan cosas tipo a1... pero se escapan --1
