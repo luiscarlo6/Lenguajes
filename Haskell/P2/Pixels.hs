@@ -83,7 +83,7 @@ negative (Pixels c a) = Pixels c $ map (\ l -> map (\ (Pixel p) -> Pixel (not p)
 -- main = do 
 --           let file = "alfabeto"
 --           h <- SIO.openFile file SIO.ReadMode 
-          n <- readFont h
+--          n <- readFont h
 
 --______________________________________________________________________________
 
