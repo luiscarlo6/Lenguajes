@@ -67,9 +67,3 @@ backwards (Pixels c a) = Pixels c $ map reverse a
 -- | Intercambia los @' '@ por @'*'@ en un @Pixels@ y viceversa
 negative :: Pixels -> Pixels
 negative (Pixels c a) = Pixels c $ map (\ l -> map (\ (Pixel p) -> Pixel (not p)) l ) a
-
---variables de uso 
-a = oldPixelsToPixels [" *** ","*   *","*   *","*   *","*****","*   *","*   *"]
-b = oldPixelsToPixels ["**** ","*   *","*   *","**** ","*   *","*   *","**** "]
-c = [a,b]
-
