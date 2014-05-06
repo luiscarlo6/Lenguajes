@@ -66,13 +66,17 @@ readFont n = do fontEntrada <- SIO.hGetContents n
 
     --se le pasa el archivo font leido y lo procesa
     temporal :: String -> [([Char], [[Char]])]
-    temporal n = map (\(x,y)->(x,fst y))(obtenerTuplas (read (last (words (head (lines n ))))::Int) ((dropWhile null $ tail $ lines n )))
-
+    temporal n = map (\(x,y)->(x,fst y))(obtenerTuplas (numero n) ((contenido n )))
+      where
+        numero x = (read (last (words (head (lines x ))))::Int)
+        contenido y = dropWhile null $ tail $ lines y
+          
+          
+          
     -- procesa el font
     obtenerTuplas :: Int -> [[Char]] -> [([Char], ([[Char]], [[Char]]))]
     obtenerTuplas num [] = []
-    obtenerTuplas num ls = ((eliminarEspeciales(DL.head b)),DL.splitAt num (DL.tail b) ) : obtenerTuplas num (DL.dropWhile DL.null bs)
-      where (b,bs) = DL.break null ls
+    obtenerTuplas num ls = ((eliminarEspeciales(DL.head ls)),DL.splitAt num (DL.tail (take (num+1) ls)) ) : obtenerTuplas num (DL.dropWhile DL.null (DL.drop (num+1) ls) )
             
     --eliminino los \" que vienen del archivo
     eliminarEspeciales :: [Char] -> [Char]
