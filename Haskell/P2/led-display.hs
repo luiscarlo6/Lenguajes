@@ -1,31 +1,27 @@
 import qualified Data.List as DL
 import qualified Data.Char as DC
 import qualified System.Environment as SE (getArgs)
-
+import qualified System.IO as SIO 
 
 
 mensajeLC = "\nError: Deben haber al menos dos archivos en la linea de comandos\n"
 mensajeAV = "\nError: El archivo font esta vacio\n"
 mensajeNN = "\nError: Los numeros suministrados en el archivo deben de ser positivos\n"
 mensajeNC = "\nError: Los tamaños de filas y columnas no corresponden\n"
+mensajeMC = "\nError: Hay un caracter mas entre comillas\n"
 
-temp = "5 7\n\n\" \"\n     \n     \n     \n     \n     \n     \n     \n\n\"!\"\n  *  \n  *  \n  *  \n  *  \n  *  \n     \n  *  \n\n"
-
-temp1 = ["\" \"","\"!\""]
-
-aux = [5,7]
 
 
 main = do
   archivos <- SE.getArgs
---   aux <- readFile (head archivos)
---   print aux
   
   
   if DL.length archivos < 2 
     then putStrLn mensajeLC --Caso error en la linea de comandos
          
-    else do fontEntrada <- readFile (head archivos) 
+    else do fontEntrada1 <- SIO.openFile (DL.head archivos) SIO.ReadMode
+            fontEntrada <- SIO.hGetContents fontEntrada1
+    
             --caso archivo font vacio
             if DL.null fontEntrada 
               then putStrLn mensajeAV
@@ -40,9 +36,21 @@ main = do
                                 --print contenidoFont
                                 if not (validarTamaños (fromEnum(last numeros)) (fromEnum(head numeros)) contenidoFont ) 
                                    then putStrLn mensajeNC
-                                   else print contenidoFont
+                                   else if not (validarUnicidad contenidoFont) 
+                                        then putStrLn mensajeMC
+                                        else do let final = map (\(x,y)-> (((\(w:_)->w)x),y)) contenidoFont
+                                          
+                                                print final
 
 
+                                                
+                                                
+                                                
+                                                
+                                                
+validarUnicidad cont = all (\(x,y)-> (DL.length x) == 1) cont
+                                   
+                                   
 --valida que el tamaño que representa los pixeles se corresponda
 validarTamaños fil colm cont =  all (\(w,x)-> (length x == fil) && (all (\w -> (length w == colm)) x) ) cont
 
@@ -59,12 +67,6 @@ procesar num ls = ((stringToChar(DL.head b)),DL.splitAt num (DL.tail b) ) : proc
   where (b,bs) = DL.break null ls
         
 
-
-        
-
-        
-        
-        
         
 stringToChar n = (DL.delete  '\"' (DL.delete  '\"' n))--(\(x:_)->x)
 
