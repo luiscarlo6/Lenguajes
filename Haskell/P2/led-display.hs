@@ -27,14 +27,15 @@ readFont n = do fontEntrada <- SIO.hGetContents n
                     then error mensajeAV
                     
                     else do let numeros = obtenerNumeros (DL.head (DL.lines fontEntrada)) 
-                            --valido que todos los numeros sean degativos
+                            --valido que todos los numeros sean positivos
                             if not (DL.all (>=0) numeros)
                               then error mensajeNN
                               
-                              else do let contenidoFont = temporal(fontEntrada)
-                                          
-                                      if not (validarTam (fromEnum(last numeros)) (fromEnum(head numeros)) contenidoFont ) 
+                              else do let contenidoFont = map (\(x,y)->(x,fst y))(obtenerTuplas (last numeros ) ( dropWhile null $ tail $ lines fontEntrada ))
+                                      --valida que los tamaños se correspondan
+                                      if not (validarTam (last numeros) (head numeros) contenidoFont ) 
                                           then error mensajeNC
+                                          --valida que los string tengan un solo caracter
                                           else if not (validarUnicidad contenidoFont) 
                                               then error mensajeMC
                                               else do let final = map (\(x,y)-> ((head x),y)) contenidoFont
@@ -45,34 +46,21 @@ readFont n = do fontEntrada <- SIO.hGetContents n
     mensajeNN = "\nError: Los numeros suministrados en el archivo deben de ser positivos\n"
     mensajeNC = "\nError: Los tamaños de filas y columnas no corresponden\n"
     mensajeMC = "\nError: Hay un caracter mas entre comillas\n"
-  
+
     --Valida que halla exactamente un caracter entre comillas
     validarUnicidad :: [([a], t)] -> Bool
     validarUnicidad cont = all (\(x,y)-> (DL.length x) == 1) cont
-                                      
                                       
     --valida que el tamaño que representa los pixeles se corresponda
     validarTam :: Int -> Int -> [(t, [[a]])] -> Bool
     validarTam fil colm cont =  all (\(w,x)-> (length x == fil) && (all (\w -> (length w == colm)) x) ) cont
 
-
-    --obtengo los numeros que traen en el archivo
-    --Y valido que no vengan cosas tipo a1... pero se escapan --1
-
+    --obtengo los numeros que traen en el archivo Y valido que no vengan cosas tipo a1... pero se escapan --1
     obtenerNumeros :: String -> [Int]
     obtenerNumeros n = if all (\x -> all (\y-> DC.isDigit y || y == '-') x)(words n)
                       then (map (\x -> read x::Int) (words n))
                       else error "Numero no validos"
 
-    --se le pasa el archivo font leido y lo procesa
-    temporal :: String -> [([Char], [[Char]])]
-    temporal n = map (\(x,y)->(x,fst y))(obtenerTuplas (numero n) ((contenido n )))
-      where
-        numero x = (read (last (words (head (lines x ))))::Int)
-        contenido y = dropWhile null $ tail $ lines y
-          
-          
-          
     -- procesa el font
     obtenerTuplas :: Int -> [[Char]] -> [([Char], ([[Char]], [[Char]]))]
     obtenerTuplas num [] = []
