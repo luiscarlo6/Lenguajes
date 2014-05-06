@@ -1,4 +1,8 @@
 module Pixels where
+
+import qualified Data.Char as DC
+import qualified System.IO as SIO 
+
 import qualified Data.Map as DM
 import qualified Graphics.HGL as G
 import qualified Data.Maybe as M
@@ -74,3 +78,61 @@ a = oldPixelsToPixels [" *** ","*   *","*   *","*   *","*****","*   *","*   *"]
 b = oldPixelsToPixels ["**** ","*   *","*   *","**** ","*   *","*   *","**** "]
 c = [a,b]
 
+--______________________________________________________________________________
+
+
+
+readFont n = do fontEntrada <- SIO.hGetContents n
+                let alicia = temporal (fontEntrada)
+                let beth = map (\(x,y)-> ((stringToChar x),y)) alicia
+                
+                return (DM.fromList(map (\(x,y)-> (x,(oldPixelsToPixels y)))beth))
+                                                
+                                                
+                                                
+                                                
+validarUnicidad cont = all (\(x,y)-> (DL.length x) == 1) cont
+                                  
+                                  
+--valida que el tamaño que representa los pixeles se corresponda
+validarTamaños fil colm cont =  all (\(w,x)-> (length x == fil) && (all (\w -> (length w == colm)) x) ) cont
+
+
+--obtengo los numeros que traen en el archivo
+obtenerNumeros n = map stringToInt (words n)
+
+--se le pasa el archivo font leido y lo procesa
+temporal n = map (\(x,y)->(x,fst y))(procesar (read (last (words (head (lines n ))))::Int) ((dropWhile null $ tail $ lines n )))
+
+-- procesa el font
+procesar num [] = []
+procesar num ls = ((eliminarEspeciales(DL.head b)),DL.splitAt num (DL.tail b) ) : procesar num (DL.dropWhile DL.null bs)
+  where (b,bs) = DL.break null ls
+        
+
+        
+eliminarEspeciales n = (DL.delete  '\"' (DL.delete  '\"' n))--(\(x:_)->x)
+
+
+stringToChar n = (\(x:_)->x)n
+
+
+
+
+--convertir un string numerico en numero
+stringToInt n = if DL.head n == '-' 
+                then (-1)*(convertirNum(map (DC.digitToInt) (tail n))) 
+                else convertirNum(map (DC.digitToInt) n)
+  where
+    --Llamo a convertirNumero pero con un solo argumento
+    convertirNum n = convertirNumero 0 n
+
+    --convertir una lista de enteros en su numeor equivalente ejemplo [1,0] = 10
+    convertirNumero n x = if DL.null x 
+                          then n 
+                          else convertirNumero (n +(((potenciaDiez ((DL.length x)-1) 1 )*(DL.head x)))) (DL.tail x)
+
+    --Obtengo la n-sima potencia de diez
+    potenciaDiez n r = if n == 0 
+                      then r 
+                      else potenciaDiez (n-1)(r * 10) 
