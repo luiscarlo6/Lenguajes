@@ -1,3 +1,4 @@
+module Pixels where
 import qualified Data.Map as DM
 import qualified Graphics.HGL as G
 import qualified Data.Maybe as M

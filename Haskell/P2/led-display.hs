@@ -2,7 +2,8 @@ import qualified Data.List as DL
 import qualified Data.Char as DC
 import qualified System.Environment as SE (getArgs)
 import qualified System.IO as SIO 
-
+import qualified Data.Map as M
+import Pixels
 
 mensajeLC = "\nError: Deben haber al menos dos archivos en la linea de comandos\n"
 mensajeAV = "\nError: El archivo font esta vacio\n"
@@ -12,20 +13,24 @@ mensajeMC = "\nError: Hay un caracter mas entre comillas\n"
 
 
 
+
 main = do
   archivos <- SE.getArgs
   
   
   if DL.length archivos < 2 
     then putStrLn mensajeLC --Caso error en la linea de comandos
-         
+        
     else do fontEntrada1 <- SIO.openFile (DL.head archivos) SIO.ReadMode
-            fontEntrada <- SIO.hGetContents fontEntrada1
-    
+            x <- salida fontEntrada1
+            print ( x)
+            --print "\n"
+--             fontEntrada <- SIO.hGetContents fontEntrada1
+ {-   
             --caso archivo font vacio
             if DL.null fontEntrada 
               then putStrLn mensajeAV
-                   
+                  
               else do let numeros = obtenerNumeros (DL.head (DL.lines fontEntrada)) 
                                     
                       if not (DL.all (>0) numeros)
@@ -35,22 +40,27 @@ main = do
                                 --print numeros
                                 --print contenidoFont
                                 if not (validarTamaños (fromEnum(last numeros)) (fromEnum(head numeros)) contenidoFont ) 
-                                   then putStrLn mensajeNC
-                                   else if not (validarUnicidad contenidoFont) 
+                                  then putStrLn mensajeNC
+                                  else if not (validarUnicidad contenidoFont) 
                                         then putStrLn mensajeMC
-                                        else do let final = map (\(x,y)-> (((\(w:_)->w)x),y)) contenidoFont
+                                        else do let final = map (\(x,y)-> ((stringToChar x),y)) contenidoFont
                                           
-                                                print final
+                                                print (M.fromList final)-}
 
 
-                                                
+                                              
+                                              
+salida n = do fontEntrada <- SIO.hGetContents n
+              let alicia = readFont (fontEntrada)
+              let    beth = map (\(x,y)-> ((stringToChar x),y)) alicia
+              return (M.fromList(map (\(x,y)-> (x,(oldPixelsToPixels y)))beth))
                                                 
                                                 
                                                 
                                                 
 validarUnicidad cont = all (\(x,y)-> (DL.length x) == 1) cont
-                                   
-                                   
+                                  
+                                  
 --valida que el tamaño que representa los pixeles se corresponda
 validarTamaños fil colm cont =  all (\(w,x)-> (length x == fil) && (all (\w -> (length w == colm)) x) ) cont
 
@@ -63,15 +73,15 @@ readFont n = map (\(x,y)->(x,fst y))(procesar (read (last (words (head (lines n 
 
 -- procesa el font
 procesar num [] = []
-procesar num ls = ((stringToChar(DL.head b)),DL.splitAt num (DL.tail b) ) : procesar num (DL.dropWhile DL.null bs)
+procesar num ls = ((eliminarEspeciales(DL.head b)),DL.splitAt num (DL.tail b) ) : procesar num (DL.dropWhile DL.null bs)
   where (b,bs) = DL.break null ls
         
 
         
-stringToChar n = (DL.delete  '\"' (DL.delete  '\"' n))--(\(x:_)->x)
+eliminarEspeciales n = (DL.delete  '\"' (DL.delete  '\"' n))--(\(x:_)->x)
 
 
-
+stringToChar n = (\(x:_)->x)n
 
 
 
@@ -91,5 +101,5 @@ stringToInt n = if DL.head n == '-'
 
     --Obtengo la n-sima potencia de diez
     potenciaDiez n r = if n == 0 
-                       then r 
-                       else potenciaDiez (n-1)(r * 10) 
+                      then r 
+                      else potenciaDiez (n-1)(r * 10) 
