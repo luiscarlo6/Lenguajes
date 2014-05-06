@@ -6,20 +6,19 @@ import qualified Data.Map as M
 import Pixels
 
 mensajeLC = "\nError: Deben haber al menos dos archivos en la linea de comandos\n"
-mensajeAV = "\nError: El archivo font esta vacio\n"
-mensajeNN = "\nError: Los numeros suministrados en el archivo deben de ser positivos\n"
-mensajeNC = "\nError: Los tamaños de filas y columnas no corresponden\n"
-mensajeMC = "\nError: Hay un caracter mas entre comillas\n"
+-- mensajeAV = "\nError: El archivo font esta vacio\n"
+-- mensajeNN = "\nError: Los numeros suministrados en el archivo deben de ser positivos\n"
+-- mensajeNC = "\nError: Los tamaños de filas y columnas no corresponden\n"
+-- mensajeMC = "\nError: Hay un caracter mas entre comillas\n"
 
 
 
 
 main = do
   archivos <- SE.getArgs
-  
-  
+
   if DL.length archivos < 2 
-    then putStrLn mensajeLC --Caso error en la linea de comandos
+    then error mensajeLC --Caso error en la linea de comandos
         
     else do fontEntrada1 <- SIO.openFile (DL.head archivos) SIO.ReadMode
             x <- readFont fontEntrada1

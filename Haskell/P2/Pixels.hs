@@ -80,17 +80,49 @@ c = [a,b]
 
 --______________________________________________________________________________
 
+--mensajeLC = "\nError: Deben haber al menos dos archivos en la linea de comandos\n"
+mensajeAV = "\nError: El archivo font esta vacio\n"
+mensajeNN = "\nError: Los numeros suministrados en el archivo deben de ser positivos\n"
+mensajeNC = "\nError: Los tamaños de filas y columnas no corresponden\n"
+mensajeMC = "\nError: Hay un caracter mas entre comillas\n"
 
 
+
+readFont :: SIO.Handle -> IO (DM.Map Char Pixels)
 readFont n = do fontEntrada <- SIO.hGetContents n
-                let alicia = temporal (fontEntrada)
-                let beth = map (\(x,y)-> ((stringToChar x),y)) alicia
+                --let alicia = temporal (fontEntrada)
+                    --beth = map (\(x,y)-> ((stringToChar x),y)) alicia
+                    --caso archivo font vacio
+                if DL.null fontEntrada 
+                    then error mensajeAV
+                    
+                    else do let numeros = obtenerNumeros (DL.head (DL.lines fontEntrada)) 
+                            
+                            if not (DL.all (>0) numeros)
+                              then error mensajeNN
+                              
+                              else do let contenidoFont = temporal(fontEntrada)
+                                          --print numeros
+                                          --print contenidoFont
+                                      if not (validarTamaños (fromEnum(last numeros)) (fromEnum(head numeros)) contenidoFont ) 
+                                          then error mensajeNC
+                                          else if not (validarUnicidad contenidoFont) 
+                                              then error mensajeMC
+                                              else do let final = map (\(x,y)-> ((stringToChar x),y)) contenidoFont
+                                                      --return (M.fromList final)
+                                                      return (DM.fromList(map (\(x,y)-> (x,(oldPixelsToPixels y)))final))
+                                                              
+
                 
-                return (DM.fromList(map (\(x,y)-> (x,(oldPixelsToPixels y)))beth))
-                                                
-                                                
-                                                
-                                                
+                
+                
+                
+                
+                
+                
+                
+                
+                
 validarUnicidad cont = all (\(x,y)-> (DL.length x) == 1) cont
                                   
                                   
