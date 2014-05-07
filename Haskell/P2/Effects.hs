@@ -19,4 +19,4 @@ data Effects = Say String
 
 readDisplayInfo :: SIO.Handle -> IO [Effects]
 readDisplayInfo h =  do e <- SIO.hGetContents h
-                        return $ map (\ x ->if x==""then Down else read x::Effects) $  lines e 
+                        return $ map (\ x -> read x::Effects) $  lines e 
