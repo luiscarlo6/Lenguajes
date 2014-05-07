@@ -37,8 +37,11 @@ hacerPantalla x = doit x 0 []
                   where doit [] _ p = p
                         doit (x:xs) n p = doit xs (n+1) $ p ++ pixelListToCoord x n 
 
-dibujarPixel :: Posicion -> G.Graphic
-dibujarPixel (x,y) = G.withColor G.Red $
+dibujarPixels ::Pixels -> G.Graphic
+dibujarPixels p = G.overGraphics $ map (dibujarPixel (color p)) $ hacerPantalla $ dots p
+
+dibujarPixel :: G.Color -> Posicion -> G.Graphic
+dibujarPixel c (x,y) = G.withColor c $
                      G.ellipse (x*ppc+1,y*ppc+1) (((x+1))*ppc,(y+1)*ppc)
 
 pixelListToCoord :: [Pixel]-> Int -> Pantalla
@@ -50,7 +53,7 @@ pixelListToCoord l n = hazlo l n 0 []
 
 oldPixelsToPixels :: [String] -> Pixels
 --oldPixelsToPixels s = Pixels G.White $ map (\st -> map (\x -> if x ==' ' then Pixel False else Pixel True) st) s
-oldPixelsToPixels s = Pixels G.White $ map (\st -> map (\x -> Pixel (x=='*')) st) s
+oldPixelsToPixels s = Pixels G.Blue $ map (\st -> map (\x -> Pixel (x=='*')) st) s
 
 
 -- | Convierte una lista de @Pixels@ en un valor de @Pixels@ 
@@ -68,7 +71,11 @@ concatPixels lp = foldr (\ p1 p2 -> Pixels G.White (zipWith' (++) (dots p1) (dot
 -- | Convierte un @String@ a @Pixels@ agregando un
 -- espacio en blanco entre cada carácter de la entrada
 messageToPixels :: DM.Map Char Pixels -> String -> Pixels
-messageToPixels m s = concatPixels $ map (font m) $ DL.intersperse ' ' s
+--messageToPixels m s = intercalar $ concatPixels $ map (font m) $ s
+--messageToPixels m s = concatPixels $ map (font m) $ DL.intersperse ' ' s
+messageToPixels m s = concatPixels $ map (font m) $ s
+
+intercalar (Pixels c s) = Pixels c $ map (DL.intersperse (Pixel False)) s
 
 -- | Desplaza una hilera de un @Pixels@ hacia arriba
 up :: Pixels -> Pixels
