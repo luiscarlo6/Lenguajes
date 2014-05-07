@@ -31,11 +31,21 @@ turnOn p = Pixel True
 
 
                                    
---hacerPantalla :: [[Pixel]] -> Pantalla
+hacerPantalla :: [[Pixel]] -> Pantalla
+hacerPantalla [] = []
+hacerPantalla x = doit x 0 []
+                  where doit [] _ p = p
+                        doit (x:xs) n p = doit xs (n+1) $ p ++ pixelListToCoord x n 
 
 dibujarPixel :: Posicion -> G.Graphic
-dibujarPixel (x,y) = G.withColor G.White $
+dibujarPixel (x,y) = G.withColor G.Red $
                      G.ellipse (x*ppc+1,y*ppc+1) (((x+1))*ppc,(y+1)*ppc)
+
+pixelListToCoord :: [Pixel]-> Int -> Pantalla
+pixelListToCoord [] _ = []
+pixelListToCoord l n = hazlo l n 0 []
+                       where hazlo [] _ _ f = f
+                             hazlo (x:xs) n m f = if (on x) then hazlo xs n (m+1) ((m,n):f)  else hazlo xs n (m+1) f
 
 
 oldPixelsToPixels :: [String] -> Pixels
