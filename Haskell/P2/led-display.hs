@@ -18,7 +18,10 @@ main = do
     else do fontEntrada1 <- SIO.openFile (DL.head archivos) SIO.ReadMode
             effects1 <- SIO.openFile (DL.head $ DL.tail archivos) SIO.ReadMode
             x <- readFont fontEntrada1
-            --y <- readDisplayInfo effects1
+            y <- readDisplayInfo effects1
+ 
+            print y
+
             let p =  hacerPantalla $ dots $ font x 'B'
             print p
             let g = map dibujarPixel

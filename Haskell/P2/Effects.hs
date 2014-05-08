@@ -19,4 +19,8 @@ data Effects = Say String
 
 readDisplayInfo :: SIO.Handle -> IO [Effects]
 readDisplayInfo h =  do e <- SIO.hGetContents h
-                        return $ map (\ x -> read x::Effects) $  lines e 
+                        let x = filter (/="") (lines e)
+                        return (map (\y-> read y::Effects) x)
+
+                        
+
