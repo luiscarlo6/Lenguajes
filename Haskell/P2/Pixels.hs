@@ -29,7 +29,8 @@ allOn (Pixels c p) = Pixels c $ map (\ p1 -> map turnOn p1) $  p
 turnOn :: Pixel -> Pixel
 turnOn p = Pixel True
 
-
+changeColor :: Pixels -> G.Color -> Pixels
+changeColor (Pixels _ p) c = Pixels c p
                                    
 hacerPantalla :: [[Pixel]] -> Pantalla
 hacerPantalla [] = []

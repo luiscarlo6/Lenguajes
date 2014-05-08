@@ -1,27 +1,52 @@
-Forever [ Say "Hello world!", Repeat 4 [ Delay 500, Color Yellow, Up, Delay 500, Color Blue, Right, Delay 500, Color Red, Down, Delay 500, Color White, Left], Say "Hola mundo!", Negative ]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Say "UpsideDownLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL"
+Color Green
+Negative
+Delay 2000
+UpsideDown
 Up
-
+Down
+Negative
+UpsideDown
+Say "Hola vale!"
+Up
+Up
+Up
+Negative
+Up
+Up
+Up
+Negative
+Up
+Say "Como Estas?"
+Down
+Down
+Down
+Negative
+Down
+Down
+Down
+Negative
+Down
+Say "Bien y tu?"
+Left
+Left
+Left
+Left
+Left
+Right
+Right
+Right
+Right
+Right
+Backwards
+Right
+Right
+Right
+Right
+Right
+Left
+Left
+Left
+Left
+Left
+Backwards

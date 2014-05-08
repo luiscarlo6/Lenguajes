@@ -2,6 +2,9 @@ module Effects where
 import qualified System.IO as SIO 
 
 import qualified Graphics.HGL as G
+import qualified Data.Map as DM
+
+import Pixels
 
 data Effects = Say String
              | Up
@@ -17,7 +20,8 @@ data Effects = Say String
              | Forever [Effects]
              deriving (Show, Read, Eq)
 
---readDisplayInfo :: SIO.Handle -> IO [Effects]
---readDisplayInfo h =  do e <- SIO.hGetContents h
-                        --return $ map (\ x -> read x::Effects) $  lines e 
-  --                      return (read e ::Effects)
+readDisplayInfo :: SIO.Handle -> IO [Effects]
+readDisplayInfo h =  do e <- SIO.hGetContents h
+                        return $ map (\ x -> read x::Effects) $  lines e
+
+
