@@ -2,9 +2,6 @@ module Effects where
 import qualified System.IO as SIO 
 
 import qualified Graphics.HGL as G
-import qualified Data.Map as DM
-
-import Pixels
 
 data Effects = Say String
              | Up
@@ -22,6 +19,5 @@ data Effects = Say String
 
 readDisplayInfo :: SIO.Handle -> IO [Effects]
 readDisplayInfo h =  do e <- SIO.hGetContents h
-                        return $ map (\ x -> read x::Effects) $  lines e
-
-
+                        let x = filter (/="") (lines e)
+                        return (map (\y-> read y::Effects) x)

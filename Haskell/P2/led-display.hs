@@ -20,6 +20,7 @@ main = do
             effects1 <- SIO.openFile (DL.head $ DL.tail archivos) SIO.ReadMode
             x <- readFont fontEntrada1
             y <- readDisplayInfo effects1
+			-- procesarArchivos (DL.tail archivos)  x
             ledDisplay x y
 
 ledDisplay :: DM.Map Char Pixels -> [Effects] -> IO ()
@@ -79,3 +80,33 @@ ledDisplay x y =
             
            
   
+
+-- procesarArchivos [] x      = putStrLn "Bye!"
+-- procesarArchivos (fn:fns) x = do 
+--                                   putStrLn $ "Processing " ++ fn
+--                                   effects1 <- SIO.openFile (fn) SIO.ReadMode
+--                                   y <- readDisplayInfo effects1
+--                                   
+--                                   
+--                                   print y
+-- 
+--                                   let p =  hacerPantalla $ dots $ font x 'B'
+--                                   print p
+--                                   let g = map dibujarPixel
+--                                   G.runGraphics $ do
+--                                   w <- G.openWindowEx
+--                                         "Pixels"
+--                                         Nothing
+--                                         (800, 600)
+--                                         G.DoubleBuffered
+--                                         (Just 50)
+--                                   G.clearWindow w
+--                                   
+--                                   G.setGraphic w $ G.overGraphics $ map dibujarPixel $ hacerPantalla $ dots $ messageToPixels x "De nada"
+--                                   --G.setGraphic w $ dibujarPixel (1,0)
+--                                   G.getWindowTick w
+--                                   G.getKey w
+--                                   G.closeWindow w
+--                                   
+-- 
+--                                   procesarArchivos fns x
