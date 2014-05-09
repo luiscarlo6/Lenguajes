@@ -1,1 +1,2 @@
-Repeat 3 [Say "UpsideDown",Color Green,Negative,Delay 2000,UpsideDown,Up,Down,Negative,UpsideDown]
+Say "A" 
+Repeat 4 [Delay 500,Color Yellow, Up]
