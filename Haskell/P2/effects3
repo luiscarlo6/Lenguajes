@@ -1,1 +1,1 @@
-Repeat 10 [Say "hola",Up,Delay 500,Up,Delay 500,Up,Delay 500,Up,Delay 500,Up,Delay 500,Up,Delay 500,Up]
+Forever [Say "hola",Up,Delay 500,Up,Delay 500,Up,Delay 500,Up,Delay 500,Up,Delay 500,Up,Delay 500,Up]

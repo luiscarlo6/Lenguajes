@@ -13,7 +13,7 @@ data Pixel = Pixel { on :: Bool } deriving (Show)
 
 altura = 64
 anchura = 64
-ppc = 8 
+ppc = 8
 
 type Posicion = (Int, Int)
 type Pantalla = [Posicion]

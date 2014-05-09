@@ -28,20 +28,29 @@ ledDisplay x y =
   G.runGraphics $ do
     w <- G.openWindowEx
           "Pixels"
-          Nothing
-          (800, 600)
+          (Just (10,10))
+          (1,1)
           G.DoubleBuffered
-          (Just 50)
-
+          Nothing
     dale x y (Pixels G.White [[]]) w
        where
          dale :: DM.Map Char Pixels -> [Effects] -> Pixels -> G.Window -> IO ()
          dale _ [] _ w = do
            G.getWindowTick w
---           G.closeWindow w
+           --G.closeWindow w
          dale m (Say a:xs) _ w = do
-           G.setGraphic w $ dibujarPixels $ messageToPixels m a
-           dale m xs (messageToPixels m a) w
+           G.closeWindow w
+           v <- G.openWindowEx
+                 "Pixels"
+                 (Just (10,10))
+                 (y*ppc, x*ppc)
+                 G.DoubleBuffered
+                 Nothing
+           G.setGraphic v $ dibujarPixels q
+           dale m xs q v
+             where q = messageToPixels m a
+                   x = length $ dots q
+                   y = length $ head $ dots q
          dale m (Up:xs) p w = do
            G.setGraphic w $ dibujarPixels $ up p
            dale m xs (up p) w
@@ -72,7 +81,7 @@ ledDisplay x y =
          dale m (Forever e:xs) p w = do
            dale m (concat (forever e)) p w
              where forever e = e : forever e         
-         dale m ((Repeat i e):xs) p w = do           
+         dale m ((Repeat i e):xs) p w = do
            dale m ((replicar e i)++xs) p w
              where 
                replicar e i = concat $ replicate (fromIntegral i) e  
@@ -82,6 +91,7 @@ ledDisplay x y =
 
             
            
+
   
 
 -- procesarArchivos [] x      = putStrLn "Bye!"

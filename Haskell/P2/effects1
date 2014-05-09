@@ -1,11 +1,14 @@
-Say "UpsideDown"
+Say "Esto no Sirveeeee"
 Color Green
 Negative
+Color Red
 Delay 2000
 UpsideDown
+Color Blue
 Up
 Down
 Negative
+Color Yellow
 UpsideDown
 Say "Hola vale!"
 Up

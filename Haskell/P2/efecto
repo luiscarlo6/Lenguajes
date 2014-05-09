@@ -1,4 +1,1 @@
-Up
-Down
-Down
-Repeat 4 [ Up, Up, Up, Up ]
+Forever [Say " Hello world ", Color Yellow, Down]
