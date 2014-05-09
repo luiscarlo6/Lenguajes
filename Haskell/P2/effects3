@@ -1,1 +1,1 @@
-Forever [Say "Hello World!", Say "Hola Mundo!", Negative]
+Repeat 10 [Say "hola",Up,Delay 500,Up,Delay 500,Up,Delay 500,Up,Delay 500,Up,Delay 500,Up,Delay 500,Up]

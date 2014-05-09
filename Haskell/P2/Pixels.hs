@@ -13,7 +13,7 @@ data Pixel = Pixel { on :: Bool } deriving (Show)
 
 altura = 64
 anchura = 64
-ppc = 8
+ppc = 8 
 
 type Posicion = (Int, Int)
 type Pantalla = [Posicion]
@@ -44,6 +44,9 @@ dibujarPixels p = G.overGraphics $ map (dibujarPixel (color p)) $ hacerPantalla 
 dibujarPixel :: G.Color -> Posicion -> G.Graphic
 dibujarPixel c (x,y) = G.withColor c $
                      G.ellipse (x*ppc+1,y*ppc+1) (((x+1))*ppc,(y+1)*ppc)
+                     
+repeatFunc :: Int -> (Pixels -> Pixels) -> Pixels ->Pixels
+repeatFunc i f p = concatPixels $ replicate i  $ (f p)
 
 pixelListToCoord :: [Pixel]-> Int -> Pantalla
 pixelListToCoord [] _ = []

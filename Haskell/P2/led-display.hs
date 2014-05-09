@@ -37,8 +37,7 @@ ledDisplay x y =
        where
          dale :: DM.Map Char Pixels -> [Effects] -> Pixels -> G.Window -> IO ()
          dale _ [] _ w = do
-           print "End"
---           G.getWindowTick w
+           G.getWindowTick w
 --           G.closeWindow w
          dale m (Say a:xs) _ w = do
            G.setGraphic w $ dibujarPixels $ messageToPixels m a
@@ -72,12 +71,15 @@ ledDisplay x y =
            dale m xs (changeColor p c) w
          dale m (Forever e:xs) p w = do
            dale m (concat (forever e)) p w
-             where forever e = e : forever e
-         dale m (Repeat 0 _:xs) p w = do
-           dale m xs p w
-         dale m (Repeat i e:xs) p w = do
-           dale m e p w
-           dale m (Repeat (i-1) e:xs) p w
+             where forever e = e : forever e         
+         dale m ((Repeat i e):xs) p w = do           
+           dale m ((replicar e i)++xs) p w
+             where 
+               replicar e i = concat $ replicate (fromIntegral i) e  
+
+
+
+
             
            
   
