@@ -53,7 +53,7 @@ ledDisplay x y =
          isKey _ = False
 
          isEscape :: G.Event -> Bool
-         isEscape c =  isKey c && G.char c  == '\ESC'
+         isEscape c =  isKey c && G.char c  == '\ESC' --EL ERROR ES AQUI; ES ERROR DE TIPOS PERO NO SE COMO RESOLVERLO
          isEscape _ = False
          
          foo :: G.Window -> IO() -> IO ()
