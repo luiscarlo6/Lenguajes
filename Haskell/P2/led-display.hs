@@ -73,61 +73,73 @@ ledDisplay x y =
 	   g<-G.getKey w
 	   G.closeWindow w
 	 dale m (Say a:xs) _ w = do
+           G.getWindowTick w
 	   G.closeWindow w
-	   v <- G.openWindowEx
+	   w <- G.openWindowEx
 		 "Pixels"
 		 (Just (10,10))
 		 (y*ppc, x*ppc)
 		 G.DoubleBuffered
 		 (Just 50)
 
-	   G.setGraphic v $ dibujarPixels q
+	   G.setGraphic w $ dibujarPixels q
 --	   foo w $ dale m xs q w
-           dale m xs q v
+           dale m xs q w
 	   where q = messageToPixels m a
 		 x = length $ dots q
 		 y = length $ head $ dots q
 	 dale m (Up:xs) p w = do
+           G.getWindowTick w
 	   G.setGraphic w $ dibujarPixels $ up p
 --           foo w $ dale m xs (up p) w
            dale m xs (up p) w
 	 dale m (Down:xs) p w = do
+           G.getWindowTick w
 	   G.setGraphic w $ dibujarPixels $ down p
 --	   foo w $ dale m xs (down p) w
            dale m xs (down p) w
 	 dale m (Effects.Left:xs) p w = do
+           G.getWindowTick w
 	   G.setGraphic w $ dibujarPixels $ left p
 --	   foo w $ dale m xs (left p) w
            dale m xs (left p) w
 	 dale m (Effects.Right:xs) p w = do
+           G.getWindowTick w
 	   G.setGraphic w $ dibujarPixels $ right p
 --	   foo w $ dale m xs (right p) w
            dale m xs (right p) w
 	 dale m (Backwards:xs) p w = do
+           G.getWindowTick w
 	   G.setGraphic w $ dibujarPixels $ backwards p
 --	   foo w $ dale m xs (backwards p) w
            dale m xs (backwards p) w
 	 dale m (UpsideDown:xs) p w = do
+           G.getWindowTick w
 	   G.setGraphic w $ dibujarPixels $ upsideDown p
 --	   foo w $ dale m xs (upsideDown p) w
            dale m xs (upsideDown p) w
 	 dale m (Negative:xs) p w = do
+           G.getWindowTick w
 	   G.setGraphic w $ dibujarPixels $ negative p
 --	   foo w $ dale m xs (negative p) w
            dale m xs (negative p) w
 	 dale m (Delay i:xs) p w = do
+           G.getWindowTick w
 	   CC.threadDelay $ fromIntegral i
 --	   foo w $ dale m xs p w
            dale m xs p w
 	 dale m (Color c:xs) p w = do
+           G.getWindowTick w
 	   G.setGraphic w $ dibujarPixels $ changeColor p c
 --	   foo w $ dale m xs (changeColor p c) w
            dale m xs (changeColor p c) w
 	 dale m (Forever e:xs) p w = do
+           G.getWindowTick w
 --	   foo w $ dale m (concat (forever e)) p w
            dale m (e++[Forever e]) p w
 	     where forever e = e : forever e	     
-	 dale m ((Repeat i e):xs) p w = do	     
+	 dale m ((Repeat i e):xs) p w = do
+           G.getWindowTick w
 --	   foo w $ dale m ((replicar e i)++xs) p w
            dale m ((replicar e i)++xs) p w
 	     where 
