@@ -2,30 +2,30 @@
   Module      : Pixels
   Copyright   : Universidad Simón Bolívar
   Maintainer  : Luiscarlo Rivera (09-11020) 
-                & José Julián Prado (09-11006)
-                & Grupo 9 Taller de Lenguajes de Programación I (CI-3661) 
-                Entrega: Proyecto # 2
-                 
+		& José Julián Prado (09-11006)
+		& Grupo 9 Taller de Lenguajes de Programación I (CI-3661) 
+		Entrega: Proyecto # 2
+		 
   Módulo que genera Pixels Display de caracteres de la tabla ASCII
 -}
-module Pixels where
--- (
---   -- * Tipos 
---  Pixels(color, dots), Pixel(on), Posicion, Pantalla, 
---  
---  -- * Tipografia
---  font,
---  
---  -- * Manipulación Graficas
---  changeColor, hacerPantalla, dibujarPixels, 
---  pixelListToCoord, oldPixelsToPixels, 
---  
---  -- * Combinadores
---  pixelListToPixels, concatPixels, messageToPixels,
---    
---   -- * Efectos especiales 
---   up, down, left, right, upsideDown, backwards, negative, readFont 
--- )where
+module Pixels --where
+(
+  -- * Tipos 
+ Pixels(..), Pixel(..), Posicion, Pantalla, 
+ 
+ -- * Tipografia
+ font,
+ 
+ -- * Manipulación Graficas
+ changeColor, hacerPantalla, dibujarPixels, 
+ pixelListToCoord, oldPixelsToPixels, 
+ 
+ -- * Combinadores
+ pixelListToPixels, concatPixels, messageToPixels,
+   
+  -- * Efectos especiales 
+  up, down, left, right, upsideDown, backwards, negative, readFont 
+)where
 
 import qualified Data.Char as DC
 import qualified System.IO as SIO 
@@ -43,7 +43,7 @@ data Pixel = Pixel { on :: Bool } deriving (Show) -- |´on´ Representa si el Pi
 
 --altura = 64
 --anchura = 64
-ppc = 8
+ppc = 3
 
 -- | Tupla de @Int@ que representan las coordenadas @X@ y @Y@ de un Pixel
 type Posicion = (Int, Int)
@@ -56,29 +56,29 @@ type Pantalla = [Posicion]
 -- mapa de bits
 font :: DM.Map Char Pixels -> Char -> Pixels
 font m c = pix $ DM.lookup c m
-           where 
-             pix may = if M.isJust may then M.fromJust may
-                           else allOn $ snd $ DM.elemAt 0 m
+	   where 
+	     pix may = if M.isJust may then M.fromJust may
+			   else allOn $ snd $ DM.elemAt 0 m
 
-             --enciende todos los Pixel 
-             allOn :: Pixels -> Pixels
-             allOn (Pixels w p) = Pixels w $ map (\ p1 -> map turnOn p1) $  p
+	     --enciende todos los Pixel 
+	     allOn :: Pixels -> Pixels
+	     allOn (Pixels w p) = Pixels w $ map (\ p1 -> map turnOn p1) $  p
 
-             --cambia el valor del Pixel a True
-             turnOn :: Pixel -> Pixel
-             turnOn p = Pixel True
+	     --cambia el valor del Pixel a True
+	     turnOn :: Pixel -> Pixel
+	     turnOn p = Pixel True
 
 -- | Cambia el color de los @dots@ del Pixels
 changeColor :: Pixels -> G.Color -> Pixels
 changeColor (Pixels _ p) c = Pixels c p
-                                   
+				   
 
 -- | Recibe el conjunto de puntos Pixel y genera las posiciones donde estaran
 hacerPantalla :: [[Pixel]] -> Pantalla
 hacerPantalla [] = []
 hacerPantalla x = doit x 0 []
-                  where doit [] _ p = p
-                        doit (y:ys) n p = doit ys (n+1) $ p ++ pixelListToCoord y n 
+		  where doit [] _ p = p
+			doit (y:ys) n p = doit ys (n+1) $ p ++ pixelListToCoord y n 
 
 -- | Convierte un @Pixels@ en un comando grafico para dibujar
 dibujarPixels ::Pixels -> G.Graphic
@@ -87,15 +87,15 @@ dibujarPixels p = G.overGraphics $ map (dibujarPixel (color p)) $ hacerPantalla 
     -- | Convierte un Pixel en un comando grafico para dibujar
     dibujarPixel :: G.Color -> Posicion -> G.Graphic
     dibujarPixel c (x,y) = G.withColor c $
-                        G.ellipse (x*ppc+1,y*ppc+1) (((x+1))*ppc,(y+1)*ppc)
-                     
+			G.ellipse (x*ppc+1,y*ppc+1) (((x+1))*ppc,(y+1)*ppc)
+		     
 
 -- | Convierte una lista de @Pixel@ en una lista de tuplas
 pixelListToCoord :: [Pixel]-> Int -> Pantalla
 pixelListToCoord [] _ = []
 pixelListToCoord l n = hazlo l n 0 []
-                       where hazlo [] _ _ f = f
-                             hazlo (x:xs) k m f = if (on x) then hazlo xs k (m+1) ((m,k):f)  else hazlo xs k (m+1) f
+		       where hazlo [] _ _ f = f
+			     hazlo (x:xs) k m f = if (on x) then hazlo xs k (m+1) ((m,k):f)  else hazlo xs k (m+1) f
 
 -- | Convierte una lista de @String@ formado de @' '@ y @ '*'@
 -- en su representacion en pixels
@@ -113,7 +113,7 @@ pixelListToPixels lp = foldr (\p1 p2 -> Pixels G.White (dots p1 ++ [[]] ++dots p
 -- espacios entre cada @Pixels@ de la entrada
 concatPixels :: [Pixels] -> Pixels
 concatPixels lp = foldr (\ p1 p2 -> Pixels G.White (zipWith' (++) (dots p1) (dots p2))) (Pixels G.White [[]]) lp
-                  where zipWith' f a b = if null (head b) then a else zipWith (f) a b
+		  where zipWith' f a b = if null (head b) then a else zipWith (f) a b
 
 -- | Convierte un @String@ a @Pixels@ agregando un
 -- espacio en blanco entre cada carácter de la entrada
@@ -146,7 +146,7 @@ upsideDown :: Pixels -> Pixels
 upsideDown (Pixels c a) = Pixels c $ reverse a
 
 
--- | Invierte el orden de las columnas de un @Pixels@    
+-- | Invierte el orden de las columnas de un @Pixels@	 
 backwards :: Pixels -> Pixels
 backwards (Pixels c a) = Pixels c $ map reverse a
 
@@ -160,25 +160,25 @@ negative (Pixels c a) = Pixels c $ map (\ l -> map (\ (Pixel p) -> Pixel (not p)
 -- particulares del alfabeto a partir de un archivo
 readFont :: SIO.Handle -> IO (DM.Map Char Pixels)
 readFont n = do fontEntrada <- SIO.hGetContents n
-                     --caso archivo font vacio
-                if DL.null fontEntrada 
-                    then error mensajeAV
-                    
-                    else do let numeros = obtenerNumeros (DL.head (DL.lines fontEntrada)) 
-                            --valido que todos los numeros sean positivos
-                            if not (DL.all (>=0) numeros)
-                              then error mensajeNN
-                              
-                              else do let contenidoFont =remCont (map (\(x,y)->(x,fst y))(obtenerTuplas (last numeros ) ( dropWhile null $ tail $ lines fontEntrada )))
-                                      --valida que los tamaños se correspondan
-                                      if not (validarTam (last numeros) (head numeros) contenidoFont ) 
-                                          then do print contenidoFont
-                                                  error mensajeNC
-                                          --valida que los string tengan un solo caracter
-                                          else if not (validarUnicidad contenidoFont) 
-                                              then error mensajeMC
-                                              else do let final = map (\(x,y)-> ((head x),y)) contenidoFont
-                                                      return (DM.fromList(map (\(x,y)-> (x,(oldPixelsToPixels y)))final))
+		     --caso archivo font vacio
+		if DL.null fontEntrada 
+		    then error mensajeAV
+		    
+		    else do let numeros = obtenerNumeros (DL.head (DL.lines fontEntrada)) 
+			    --valido que todos los numeros sean positivos
+			    if not (DL.all (>=0) numeros)
+			      then error mensajeNN
+			      
+			      else do let contenidoFont =remCont (map (\(x,y)->(x,fst y))(obtenerTuplas (last numeros ) ( dropWhile null $ tail $ lines fontEntrada )))
+				      --valida que los tamaños se correspondan
+				      if not (validarTam (last numeros) (head numeros) contenidoFont ) 
+					  then do print contenidoFont
+						  error mensajeNC
+					  --valida que los string tengan un solo caracter
+					  else if not (validarUnicidad contenidoFont) 
+					      then error mensajeMC
+					      else do let final = map (\(x,y)-> ((head x),y)) contenidoFont
+						      return (DM.fromList(map (\(x,y)-> (x,(oldPixelsToPixels y)))final))
   where
     --mensajes de errores
     mensajeAV = "\nError: El archivo font esta vacio\n"
@@ -189,32 +189,32 @@ readFont n = do fontEntrada <- SIO.hGetContents n
     --Valida que halla exactamente un caracter entre comillas
     validarUnicidad :: [([a], t)] -> Bool
     validarUnicidad cont = all (\(x,_)-> (DL.length x) == 1) cont
-                                      
+				      
     --valida que el tamaño que representa los pixeles se corresponda
     validarTam :: Int -> Int -> [(t, [[a]])] -> Bool
-    validarTam fil colm cont =  all (\(_,x)-> (length x == fil) && (all (\w -> (length w == colm)) x) ) cont
+    validarTam fil colm cont =	all (\(_,x)-> (length x == fil) && (all (\w -> (length w == colm)) x) ) cont
 
     --obtengo los numeros que traen en el archivo Y valido que no vengan cosas tipo a1... pero se escapan --1
     obtenerNumeros :: String -> [Int]
     obtenerNumeros w = if all (\x -> all (\y-> DC.isDigit y || y == '-') x)(words w)
-                      then (map (\x -> read x::Int) (words w))
-                      else error "Numero no validos"
+		      then (map (\x -> read x::Int) (words w))
+		      else error "Numero no validos"
 
     -- procesa el font
     obtenerTuplas :: Int -> [[Char]] -> [([Char], ([[Char]], [[Char]]))]
     obtenerTuplas _   [] = []
     obtenerTuplas num ls = ((eliminarEspeciales(DL.head ls)),DL.splitAt num (DL.tail (take (num+1) ls)) ) : obtenerTuplas num (DL.dropWhile DL.null (DL.drop (num+1) ls) )
-            
+	    
     --eliminino los \" que vienen del archivo
     eliminarEspeciales :: [Char] -> [Char]
-    eliminarEspeciales w = (DL.delete  '\"' (DL.delete  '\"' w))
+    eliminarEspeciales w = (DL.delete  '\"' (DL.delete	'\"' w))
 
     --remueve caracteres de control
     remCont :: [([Char], [[Char]])] -> [([Char], [[Char]])]
     remCont w = map (\(x,y)-> ((removerControl x), (map (removerControl) y))) w
       where
-        removerControl :: [Char] -> [Char]
-        removerControl [] = []
-        removerControl (x:xs) = if DC.isControl x 
-                            then removerControl (xs) 
-                            else x:removerControl(xs) 
+	removerControl :: [Char] -> [Char]
+	removerControl [] = []
+	removerControl (x:xs) = if DC.isControl x 
+			    then removerControl (xs) 
+			    else x:removerControl(xs) 
