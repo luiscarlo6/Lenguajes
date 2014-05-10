@@ -60,11 +60,12 @@ ledDisplay x y =
 
 	 foo :: G.Window -> IO() -> IO ()
 	 foo w f = do
+           G.getWindowTick w
 	   e <- G.maybeGetWindowEvent w
-	   let k = M.fromJust e
+           let k = M.fromJust e
 	   if (M.isNothing e) then do
-	     f 
-	     else if (isKey k) then do
+	     f
+	     else if (isKey k && G.isEscapeKey(G.keysym k)) then do
 		    G.closeWindow w
 		    else do
 		    f
