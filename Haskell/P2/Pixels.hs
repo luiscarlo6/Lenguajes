@@ -43,7 +43,7 @@ data Pixel = Pixel { on :: Bool } deriving (Show) -- |´on´ Representa si el Pi
 
 --altura = 64
 --anchura = 64
-ppc = 3
+ppc = 12
 
 -- | Tupla de @Int@ que representan las coordenadas @X@ y @Y@ de un Pixel
 type Posicion = (Int, Int)
