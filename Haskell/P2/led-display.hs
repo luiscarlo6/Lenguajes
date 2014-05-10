@@ -125,7 +125,7 @@ ledDisplay x y =
            dale m xs (changeColor p c) w
 	 dale m (Forever e:xs) p w = do
 --	   foo w $ dale m (concat (forever e)) p w
-           dale m (concat (forever e)) p w
+           dale m (e++[Forever e]) p w
 	     where forever e = e : forever e	     
 	 dale m ((Repeat i e):xs) p w = do	     
 --	   foo w $ dale m ((replicar e i)++xs) p w
