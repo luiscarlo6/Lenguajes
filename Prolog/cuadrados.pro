@@ -36,7 +36,10 @@ ecuacion(M,J,G,D),
 %diagonales menores
 ecuacion(I,N,C,H),
 ecuacion(B,G,L,M),
-ecuacion(E,J,O,D).
+ecuacion(E,J,O,D),
+ecuacion(E,B,O,L),
+ecuacion(C,F,I,P),
+ecuacion(A,H,K,N).
 
 
 numero(1).
@@ -66,3 +69,10 @@ ecuacion(A,B,C,D) :- A + B + C + D =:= 34.
 %diabolico([1,8,13,12,14,11,2,7,4,5,16,9,15,10,3,6]).
 %diabolico([1,12,7,14,8,13,2,11,10,3,16,5,15,6,9,4]).
 %diabolico([1,8,11,14,12,13,2,7,6,3,16,9,15,10,5,4]).
+
+stopwatch(Predicate) :-
+	real_time(Start),
+	call(Predicate),
+	real_time(Finish),
+	Elapsed is (Finish - Start) / 1000,
+	format('~4f seg~N',[Elapsed]), !.

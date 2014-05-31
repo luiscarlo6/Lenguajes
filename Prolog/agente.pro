@@ -1,3 +1,7 @@
+%:- op(100,xfy,:).
+
+
+
 horario( new_york, chicago,
            [  9:40 / 10:50 / nw4733 / todos,
              13:40 / 14:50 / nw4773 / habiles,
@@ -5,6 +9,11 @@ horario( new_york, chicago,
 horario( chicago, new_york,
            [  9:10 / 10:00 / nw458 / todos,
              12:20 / 13:10 / aa511 / todos ] ). 
+
+horario( dallas, chicago,
+           [  9:40 / 10:50 / aa4831 / todos,
+             11:40 / 12:50 / aa4851 / habiles,
+             18:40 / 19:50 / aa4921 / [lun,mar,mie,jue,vie] ] ). 
 
 horario( chicago, dallas,
            [  9:40 / 10:50 / aa4732 / todos,
