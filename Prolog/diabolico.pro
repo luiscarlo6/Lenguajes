@@ -2,77 +2,74 @@ diabolico([A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P]) :-
 
     crear([A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]).
 
-verificacion(A,B,C,D) :- 34 is A+B+C+D.
+magic(A,B,C,D) :- 34 is A + B + C + D.
 
-%Texto citado de Wikipedia.org:"In any 4×4 pandiagonal magic square,
+%Texto citado de Wikipedia.org:"In any 4×4 panmagiconal magic square,
 %any two numbers at the opposite corners of a 3×3 square add up to 17.".
 %Esto es que los numeros en esquinas opuestas en las submatrices 3x3 suman como máximo 17. 
-%Se usa esta verificacion junto a las 16 sumas de la constante magica 34 para resolver el problema.
+%Se usa esta magic junto a las 16 sumas de la constante magica 34 para resolver el problema.
 crear([A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P], Base0) :-
-    select(E,Base0,Base1),
-    select(O,Base1,Base2),
+    select(A,Base0,Base1),
+    select(K,Base1,Base2),
     
-    17 >= E + O, %Opuestos
+    17 >= A + K, %Opuestos
     
-    select(J,Base2,Base3),
-    select(D,Base3,Base4),
+    select(F,Base2,Base3),
+    select(P,Base3,Base4),
     
-    17 >= J + D,
+    17 >= F + P, %Opuestos
 
-    verificacion(E,O,J,D),
+    magic(A,F,K,P),
 
-    select(M,Base4,Base5),
-    select(G,Base5,Base6),
+    select(N,Base4,Base5),
+    select(H,Base5,Base6),
 
-    17 >= M + G,
+    17 >= N + H,  %Opuestos
     
-    verificacion(D,G,J,M),
+    magic(A,H,K,N),
     
-    select(B,Base6,Base7),
-    select(L,Base7,Base8),
+    select(C,Base6,Base7),
+    select(I,Base7,Base8),
 
-    17 >= B + L,
+    17 >= C + I,  %Opuestos
 
-    verificacion(B,G,L,M),
-    verificacion(E,B,O,L),
+    magic(C,F,I,P),
+    magic(C,H,I,N),
 
-    select(A,Base8,Base9),
-    select(K,Base9,Base10),
+    select(B,Base8,Base9),
+    select(L,Base9,Base10),
 
-    17 >= A + K,
+    17 >= B + L,  %Opuestos
 
-    select(I,Base10,Base11),
-    select(C,Base11,Base12),
+    select(D,Base10,Base11),
+    select(J,Base11,Base12),
 
-    17 >= I + C,
+    17 >= D + J,  %Opuestos
 
-    verificacion(A,B,C,D),
-    verificacion(A,E,I,M),
-    verificacion(I,J,K,L),
-    verificacion(C,G,K,O),
+    magic(A,B,C,D),
+    magic(D,H,L,P),
+    magic(I,J,K,L),
+    magic(B,F,J,N),
 
-    select(H,Base12,Base13),
-    select(N,Base13,Base14),
+    select(E,Base12,Base13),
+    select(O,Base13,Base14),
 
-    17 >= H + N,
+    17 >= E + O,  %Opuestos
 
-    verificacion(A,H,K,N),
-    verificacion(C,H,I,N),
+    magic(D,E,J,O),
+    magic(E,B,O,L),
 
-    select(F,Base14,Base15),
-    select(P,Base15,_),
+    select(G,Base14,Base15),
+    select(M,Base15,_),
     
-    17 >= F + P,
+    17 >= G + M,  %Opuestos
     
-    verificacion(E,F,G,H),
-    verificacion(M,N,O,P),
-    verificacion(B,F,J,N),
-    verificacion(D,H,L,P),
-    verificacion(C,I,F,P),
-    verificacion(A,F,K,P).
-
- 
-consultar([A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P],[A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P]).
+    magic(E,F,G,H),
+    magic(M,N,O,P),
+    magic(A,E,I,M),
+    magic(C,G,K,O),
+    magic(B,G,L,M),
+    magic(D,G,J,M).
 
 stopwatch(Predicate) :-
     real_time(Start),
