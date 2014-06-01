@@ -14,9 +14,9 @@
 
 %Caso que se desea generar todas las posibles permutaciones de Lista.
 idiotsort(Lista,Ordenada):- 
-  var(Lista),                   %chequea que lista sea una variable
-  verificador(Ordenada), !,     %se verifica que Ordenada esta ordenada ascendentemente
-  generador(Lista,Ordenada).    %genera todas las posibles permutaciones
+  var(Lista),			%chequea que lista sea una variable
+  verificador(Ordenada), !,	%se verifica que Ordenada esta ordenada ascendentemente
+  generador(Lista,Ordenada).	%genera todas las posibles permutaciones
 
 %Caso en que se quiere generar la lista ordenada ascendentemente de Lista
 idiotsort(Lista,Ordenada) :-  
