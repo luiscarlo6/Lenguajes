@@ -1,14 +1,14 @@
 % Tarea de Prolog
 % CI3661 - Taller de Lenguajes de Programación I
 % Grupo # 9
-% Jose Julian Prado 09-11006
+% José Julián Prado 09-11006
 % Luiscarlo Rivera  09-11020
 
 
 %%idiotsort(?Lista,?Ordenada)
 %
 % *idiotsort/2 triunfa si Ordenada tiene todos los elementos de Lista ordenados
-%  de forma ascendente caso la lista viene vacia.
+%  de forma ascendente caso la lista viene vacía.
 % *El predicado puede usarse para dada una lista ordenada en Ordenada generar 
 %  todas las posibles permutaciones de dicha lista.
 
@@ -28,9 +28,9 @@ idiotsort(Lista,Ordenada) :-
   
 %%generador(?Lista,?Ordenar)
 %
-% *generador/2 triunfa si Ordenada es una permitacion de Lista pero con todos
+% *generador/2 triunfa si Ordenada es una permutación de Lista pero con todos
 %  sus elementos ordenados de forma ascendente.
-%  de forma ascendente caso la lista viene vacia
+%  de forma ascendente caso la lista viene vacía
 
 %Caso que genera todas las permutaciones posibles con los elementos de Ordenar.
 generador(Lista,Ordenar):-
@@ -38,7 +38,7 @@ generador(Lista,Ordenar):-
   permutation(Ordenar,Lista).
 
 
-%Caso que genera todas las permitaciones posibles de los elementos de Lista.
+%Caso que genera todas las permutaciones posibles de los elementos de Lista.
 generador(Lista,Ordenar) :-
   var(Ordenar),
   permutation(Lista, Ordenar).
@@ -46,7 +46,7 @@ generador(Lista,Ordenar) :-
   
 %%verificador(?Lista)
 %
-% *verificador/2 triunfa si todos los elementos de Lista estan ordenados de
+% *verificador/1 triunfa si todos los elementos de Lista están ordenados de
 %  forma ascendente.
 verificador([]).
 

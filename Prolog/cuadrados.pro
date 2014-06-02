@@ -1,15 +1,15 @@
 % Tarea de Prolog
 % CI3661 - Taller de Lenguajes de Programación I
 % Grupo # 9
-% Jose Julian Prado 09-11006
+% José Julián Prado 09-11006
 % Luiscarlo Rivera  09-11020
 
 
 %%diabolico(?Evil)
 %
 % *diabolico/1 triunfa si Evil es una lista con 16 elementos [1 .. 16] diferentes
-%  tal que dichos elementos representan un Cuadrado magico pandiagonal
-% *El predicado puede usarse para generar todos los posibles Cuadrado Magicos
+%  tal que dichos elementos representan un Cuadrado mágico pandiagonal
+% *El predicado puede usarse para generar todos los posibles Cuadrado Mágicos
 %  Pandiagonal
 
 diabolico([A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P]) :-
@@ -26,15 +26,15 @@ magic(A,B,C,D) :- 34 is A + B + C + D.
 
 %%crear(Lista, Base0).
 % 
-% *crear/2 triunfa si lista es un cuadrado magico pandiagonal
-% *Base0 es la lista de todos los posibles numeros que pueden ser usados en el
+% *crear/2 triunfa si lista es un cuadrado mágico pandiagonal
+% *Base0 es la lista de todos los posibles números que pueden ser usados en el
 %  predicado
-% *Se emplea como heuristica la idea de "In any 4×4 pandiagonal magic square,
+% *Se emplea como heurística la idea de "In any 4×4 pandiagonal magic square,
 %  any two numbers at the opposite corners of a 3×3 square add up to 17." 
 %  Texto citado de Wikipedia.org:
 %  http://en.wikipedia.org/wiki/Pandiagonal_magic_square
 % *Adicionalmente se usa magic para hacer los 16 chequeos necesarios para verificar
-%  que la solucion sea correcta.
+%  que la solución sea correcta.
 crear([A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P], Base0) :-
     select(A,Base0,Base1),
     select(K,Base1,Base2),
