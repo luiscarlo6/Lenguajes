@@ -38,8 +38,6 @@ calcularP(_,D,Periodo):-
 %Si la lista contiene un numero diferente a 2 y 5, entonces
 %es un decimal periódico puro o mixto
 calcularP(R,_,Periodo):-
-%    descomponer(D,L),
-%    revisar(L),
     construir(R,[],Periodo).
 
 
@@ -49,7 +47,7 @@ calcularP(R,_,Periodo):-
 
 construir(_,L, Periodo):-
     length(L,T),
-    3 < T,
+    2 < T,
     consultar(L,Periodo),
     !.
 
@@ -84,11 +82,11 @@ consultar([_|B],Periodo) :-
 revisar([]).
 
 revisar([2|L]):- 
-  revisar1(L),
+  revisar(L),
   !.
 
 revisar([5|L]):- 
-  revisar1(L),
+  revisar(L),
   !.
 
 
