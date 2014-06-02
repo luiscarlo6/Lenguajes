@@ -8,7 +8,7 @@ periodo(Dividendo, Divisor,Periodo):-
     calcularP(R,D,Periodo),!.
 
 %Caso donde la descomposicion en factores primos del denominador
-%solo contiene 2 y 5, Fraccion Ecacta
+%solo contiene 2 y 5, Fraccion Exacta
 %En este caso el periodo siempre es 0.
 calcularP(_,D,Periodo):-
     descomponer(D,L),
