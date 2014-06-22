@@ -51,11 +51,11 @@ class Scissors < Movement
   def vsroca m
     [1,0]
   end
-  
+
   def vspapel m
     [0,1]
   end
-  
+
   def vstijera m
     [0,0]
   end
@@ -63,11 +63,22 @@ end
 
 ###LAS ESTRATEGIAS###
 class Strategy
+  @@semilla = 42
+  def gen_inst sim
+    case sim
+    when :Paper
+      Paper.new
+    when :Rock
+      Rock.new
+    when :Scissors
+      Scissors.new
+    end
+  end
 end
 
 class Uniform < Strategy
   attr_accessor :estrategia, :original
-  
+
   def initialize lista
     unless lista.empty?
       @estrategia = lista.uniq
@@ -76,8 +87,11 @@ class Uniform < Strategy
       raise "Error: La Lista en Uniform no puede ser vacia"
     end
   end
-  
+
   def next m
+    @temp = @estrategia.first
+    @estrategia = @estrategia.rotate
+    gen_inst @temp
   end
 
   def to_s
@@ -93,46 +107,69 @@ end
 
 class Biased < Strategy
   attr_accessor :estrategia, :original,:probabilidad
-  
-   def initialize mapa
+
+  def initialize mapa
     unless mapa.empty?
       @estrategia = mapa
       @original = mapa.clone
-      @probabilidad = cal_prob
+      cal_prob
+      @probabilidad = @estrategia.values.sort
     else
       raise "Error: El mapa no puede estar vacio"
     end
   end
-  
+
   def next m
+    @tmp = @probabilidad.first
+    @probabilidad = @probabilidad.rotate
+    @valor = @estrategia.key(@tmp)
+    gen_inst @valor
   end
 
   def to_s
     @aux = self.class.name + " {"
-    @estrategia.each {|key, value| @aux = @aux + ":#{key} => #{value/@probabilidad.to_f}, " }
-    @aux = @aux.chomp(", ") + " }" 
+    @estrategia.each {|key, value| @aux = @aux + ":#{key} => #{value}, " }
+    @aux = @aux.chomp(", ") + " }"
   end
 
   def reset
     @estrategia = @original
+    cal_prob
   end
-  
+
+  private
   def cal_prob
     @prob = 0
     @estrategia.values.each {|x| @prob = @prob + x}
     @prob
+
+    if @prob !=0
+      @estrategia.each {|key, value| @estrategia[key] = value/@prob.to_f}
+    end
   end
 end
 
 class Mirror < Strategy
-  attr_accessor :estrategia, :original
-  
+  attr_accessor :estrategia, :original, :control, :anterior
+
   def initialize mov
     @estrategia = mov
     @original = mov
+    @control = true
+    @anterior = nil
   end
-  
+
   def next m
+    @aux
+    if control
+      @control = false
+      @anterior = m
+      gen_inst @estrategia
+    else
+      @estrategia = anterior
+      @anterior = m
+      gen_inst @estrategia
+    end
   end
 
   def to_s
@@ -146,14 +183,25 @@ end
 
 class Smart < Strategy
   attr_accessor :p, :r, :s
-  
+
   def initialize
     @p = 0
     @r = 0
     @s = 0 
+    srand(@@semilla)
   end
-  
+
   def next m
+    sumar m
+    @num = rand(@p + @r + @s -1).to_int
+    puts @n
+    if (0 <= @num) && (@num < @p)
+      Scissors.new
+    elsif (@p <= @num) && (@num < @p+@r)
+      Paper.new
+    elsif (@p+@r <= @num) && (@num < @p+@r+@s)
+      Rock.new
+    end
   end
 
   def to_s
@@ -164,5 +212,18 @@ class Smart < Strategy
     @p = 0
     @r = 0
     @s = 0 
+    srand(@@semilla)
+  end
+
+  private
+  def sumar m
+    case m
+    when :Paper
+      @p += 1
+    when :Rock
+      @r += 1
+    when :Scissors
+      @s += 1
+    end
   end
 end
