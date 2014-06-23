@@ -1,4 +1,64 @@
 # -*- coding: utf-8 -*-
+module BFS
+  
+  def find(start,predicate)
+    queue = [start]
+    set = [start]
+    while not queue.empty?
+      t = queue.shift
+      if predicate.call(t.value)
+        return t
+      end
+      t.each do |e|
+        if not set.include? e
+          set << e
+          queue << e
+        end
+      end
+    end
+    puts "Ningun elemento cumple con el predicado"
+  end
+  
+  def path(start,predicate)
+    queue = [start]
+    set = [start]
+    roads = Hash[start,[start]]
+    while not queue.empty?
+      t = queue.shift
+#      puts "roads="+roads.to_s+" t="+t.to_s+" pred="+pred.to_s
+      if predicate.call(t.value)
+        return roads[t]
+      end
+      t.each do |e|
+        if not set.include? e
+          roads[e] = roads[t] + [e]
+          set << e
+          queue << e
+        end
+      end 
+    end
+    puts "Ningun elemento cumple con el predicado"
+  end
+
+  def walk(start,action)
+    queue = [start]
+    set = [start]
+    list = []
+    while not queue.empty?
+      t = queue.shift
+      action.call(t.value)
+      list << t
+      t.each do |e|
+        if not set.include? e
+          set << e
+          queue << e
+        end
+      end 
+    end
+    return list
+  end
+end
+
 class BinTree
   include BFS
 
@@ -25,8 +85,22 @@ class BinTree
   end
 
   def to_s
-    #    "#{@value}"
-    "(#{@value},#{@left.to_s},#{@right.to_s})"
+    "#{@value}"
+    #"(#{@left.to_s},#{@value},#{@right.to_s})"
+  end
+
+  def HacerArbol
+    bt8 = BinTree.new(11,nil,nil)
+    bt7 = BinTree.new(5,nil,nil)
+    bt6 = BinTree.new(6,bt7,bt8)
+    bt5 = BinTree.new(3,nil,nil)
+    bt1 = BinTree.new(7,bt5,bt6)
+    bt4 = BinTree.new(4,nil,nil)    
+    bt3 = BinTree.new(9,bt4,nil)
+    bt2 = BinTree.new(5,nil,bt3)
+    @value = 2
+    @left = bt1
+    @right = bt2
   end
 end
 
@@ -52,21 +126,4 @@ class GraphNode
   def to_s
     "(#{@value},#{@children.to_s})"
   end
-end
-
-
-module BFS
-  
-  def find(start,predicate)
-    raise "Not implemented yet"
-  end
-  
-  def path(start,predicate)
-    raise "Not implemented yet"
-  end
-
-  def walk(start,action)
-    raise "Not implemented yet"
-  end
-
 end
