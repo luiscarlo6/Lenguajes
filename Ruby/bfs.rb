@@ -25,7 +25,7 @@ module BFS
     roads = Hash[start,[start]]
     while not queue.empty?
       t = queue.shift
-#      puts "roads="+roads.to_s+" t="+t.to_s+" pred="+pred.to_s
+      puts "t="+t.to_s+" cola ="+queue.to_s+" set="+set.to_s
       if predicate.call(t.value)
         return roads[t]
       end
@@ -109,7 +109,7 @@ class GraphNode
   include BFS
 
   attr_accessor :value, # Valor alamacenado en el nodo
-               :children # Arreglo de sucesores GraphNode
+                :children # Arreglo de sucesores GraphNode
   def initialize(v,c)
     @value = v
     @children = c
@@ -124,6 +124,21 @@ class GraphNode
   end
 
   def to_s
-    "(#{@value},#{@children.to_s})"
+    "#{@value}"
+#    "(#{@value},#{@children.to_s})"
+  end
+
+  def HacerGrafo
+    munchen = GraphNode.new("Munchen",[])
+    augsburg = GraphNode.new("Augsburg",[munchen])
+    stuttgart = GraphNode.new("Stuttgart",[])
+    nurnberg = GraphNode.new("Nürnberg",[munchen,stuttgart])
+    erfurt = GraphNode.new("Erfurt",[])
+    karlsruhe = GraphNode.new("Karlsruhe",[augsburg])
+    kassel = GraphNode.new("Kassel",[munchen])
+    wuzburg = GraphNode.new("Wüzburg",[erfurt,nurnberg])
+    mannheim = GraphNode.new("Mannheim",[karlsruhe])
+    @value = "Frankfurt"
+    @children = [mannheim,wuzburg,kassel]
   end
 end
