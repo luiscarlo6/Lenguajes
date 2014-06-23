@@ -1,6 +1,7 @@
 #!/usr/bin/ruby
-
+#####################
 ###LOS MOVIMIENTOS###
+#####################
 class Movement
   def to_s
     self.class.name
@@ -61,7 +62,9 @@ class Scissors < Movement
   end
 end
 
+#####################
 ###LAS ESTRATEGIAS###
+#####################
 class Strategy
   @@semilla = 42
   def gen_inst sim
@@ -80,12 +83,9 @@ class Uniform < Strategy
   attr_accessor :estrategia, :original
 
   def initialize lista
-    unless lista.empty?
-      @estrategia = lista.uniq
-      @original = lista.uniq
-    else
-      raise "Error: La Lista en Uniform no puede ser vacia"
-    end
+    raise ArgumentError, 'La Lista no puede ser vacia' unless (not lista.empty?)
+    @estrategia = lista.uniq
+    @original = lista.uniq
   end
 
   def next m
@@ -109,14 +109,11 @@ class Biased < Strategy
   attr_accessor :estrategia, :original,:probabilidad
 
   def initialize mapa
-    unless mapa.empty?
-      @estrategia = mapa
-      @original = mapa.clone
-      cal_prob
-      @probabilidad = @estrategia.values.sort
-    else
-      raise "Error: El mapa no puede estar vacio"
-    end
+    raise ArgumentError, 'El mapa no puede ser vacio' unless (not mapa.empty?)
+    @estrategia = mapa
+    @original = mapa.clone
+    cal_prob
+    @probabilidad = @estrategia.values.sort
   end
 
   def next m
@@ -141,7 +138,6 @@ class Biased < Strategy
   def cal_prob
     @prob = 0
     @estrategia.values.each {|x| @prob = @prob + x}
-    @prob
 
     if @prob !=0
       @estrategia.each {|key, value| @estrategia[key] = value/@prob.to_f}
@@ -227,3 +223,37 @@ class Smart < Strategy
     end
   end
 end
+
+###################
+######EL JUEGO#####
+###################
+
+class Match
+  attr_accessor :jugadores
+  
+  def initialize mapa
+    raise ArgumentError, 'El mapa de los Jugadores no puede ser vacio' unless (not mapa.empty?)
+    raise ArgumentError, 'Deben haber exactamente 2 jugadores' unless (mapa.size == 2)
+    raise ArgumentError, 'Una de las Estrategias es invalida' unless (validar_estrategias mapa.values)
+    @jugadores = mapa
+  end
+  
+  def to_s
+      @jugadores.to_s
+  end
+  
+  private
+  def validar_estrategias m
+    @EsSub = true
+    m.each {|x| @EsSub = @EsSub && val_tipo(x)}
+    @EsSub
+  end
+  
+  def val_tipo x
+    @Es = false
+    if (x.instance_of? Uniform) || (x.instance_of? Biased) || (x.instance_of? Mirror) || (x.instance_of? Smart)
+      @Es = true
+    end
+    @Es
+  end
+end#Fin Match
