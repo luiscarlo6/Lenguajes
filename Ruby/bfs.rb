@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 class BinTree
+  include BFS
+
   attr_accessor :value, # Valor almacenado en el nodo
                 :left, # BinTree izquierdo
                 :right # BinTree derecho
@@ -21,7 +23,7 @@ class BinTree
       raise "No blocks given!"
     end
   end
-  
+
   def to_s
     #    "#{@value}"
     "(#{@value},#{@left.to_s},#{@right.to_s})"
@@ -30,16 +32,21 @@ end
 
 
 class GraphNode
+  include BFS
+
   attr_accessor :value, # Valor alamacenado en el nodo
-                :children # Arreglo de sucesores GraphNode
+               :children # Arreglo de sucesores GraphNode
   def initialize(v,c)
     @value = v
     @children = c
   end
   
   def each(&b)
-    @children.each &b unless @children.nil?
-    
+    @children.each do |e|
+      if not e.nil?
+        yield e
+      end 
+    end unless @children.nil?    
   end
 
   def to_s
@@ -48,13 +55,18 @@ class GraphNode
 end
 
 
+module BFS
   
-# a = BinTree.new(1,nil,nil)
-# b = BinTree.new(2,nil,nil)
-# c = BinTree.new(3,a,b)
-# d = GraphNode.new(4,[a,b,c])
-# d.each() {|a| puts a}
-# puts  c.to_s
+  def find(start,predicate)
+    raise "Not implemented yet"
+  end
+  
+  def path(start,predicate)
+    raise "Not implemented yet"
+  end
 
+  def walk(start,action)
+    raise "Not implemented yet"
+  end
 
-
+end
