@@ -16,7 +16,7 @@ module BFS
   # encuentra retorna +objeto indefinido+
   def find(start,predicate)
     queue = [start] 
-    set   = [start] #Conjunto de elmentos ya +visitados+
+    set   = [start] #Conjunto de elementos ya +visitados+
     while not queue.empty?
       t = queue.shift
       if predicate.call(t.value)
@@ -29,7 +29,7 @@ module BFS
         end
       end
     end
-    puts "Ningun elemento cumple con el predicado"
+    return nil
   end
   
 
@@ -56,7 +56,7 @@ module BFS
         end
       end 
     end
-    puts "Ningun elemento cumple con el predicado"
+    return nil
   end
 
   ##
@@ -68,9 +68,15 @@ module BFS
   def walk(start,action)
     queue = [start]
     set   = [start]  #Conjunto de elementos ya +visitados+
+    list  = []
     while not queue.empty?
       t = queue.shift
-      action.call(t.value)
+      begin
+        action.call(t.value)
+        list << t
+      rescue
+        return list
+      end      
       t.each do |e|
         if not set.include? e
           set   << e
@@ -78,7 +84,7 @@ module BFS
         end
       end 
     end
-    return set
+    return list
   end
 end
 
