@@ -1,0 +1,13 @@
+#variables de tipo
+
+r = Rock.new
+p = Paper.new
+s = Scissors.new
+
+j = Strategy.new("Jose")
+
+#estrategias
+u = Uniform.new( [ r, s, p ] )
+b = Biased.new( { r => 1, s => 3, p => 2 } )
+m = Mirror.new (r)
+st = Smart.new

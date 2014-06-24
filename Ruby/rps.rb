@@ -66,16 +66,15 @@ end
 ###LAS ESTRATEGIAS###
 #####################
 class Strategy
-  @@semilla = 42
-  def gen_inst sim
-    case sim
-    when :Paper
-      Paper.new
-    when :Rock
-      Rock.new
-    when :Scissors
-      Scissors.new
-    end
+  SEMILLA = 42
+  attr_accessor :jugador
+ 
+  def initialize jug
+    @jugador = jug
+  end
+
+  def to_s
+    @jugador.to_s
   end
 end
 
@@ -85,23 +84,23 @@ class Uniform < Strategy
   def initialize lista
     raise ArgumentError, 'La Lista no puede ser vacia' unless (not lista.empty?)
     @estrategia = lista.uniq
-    @original = lista.uniq
+    @original = lista.clone.uniq
   end
 
   def next m
-    @temp = @estrategia.first
+    temp = @estrategia.first
     @estrategia = @estrategia.rotate
-    gen_inst @temp
+    temp
   end
 
   def to_s
-    @aux = self.class.name + " ["
-    @estrategia.each {|x|@aux = @aux + x.to_s + ", "}
-    @aux = @aux.chomp(", ") + " ]"
+    aux = self.class.name + " ["
+    @estrategia.each {|x|aux = aux + x.to_s + ", "}
+    aux = aux.chomp(", ") + " ]"
   end
 
   def reset
-    @estrategia = @original
+    @estrategia = @original.clone
   end
 end
 
@@ -117,16 +116,17 @@ class Biased < Strategy
   end
 
   def next m
-    @tmp = @probabilidad.first
+    tmp = @probabilidad.first
     @probabilidad = @probabilidad.rotate
-    @valor = @estrategia.key(@tmp)
-    gen_inst @valor
+    valor = @estrategia.key(tmp)
+#     gen_inst @valor
+    valor
   end
 
   def to_s
-    @aux = self.class.name + " {"
-    @estrategia.each {|key, value| @aux = @aux + ":#{key} => #{value}, " }
-    @aux = @aux.chomp(", ") + " }"
+    aux = self.class.name + " {"
+    @estrategia.each {|key, value| aux = aux + ":#{key} => #{value}, " }
+    aux = aux.chomp(", ") + " }"
   end
 
   def reset
@@ -136,11 +136,11 @@ class Biased < Strategy
 
   private
   def cal_prob
-    @prob = 0
-    @estrategia.values.each {|x| @prob = @prob + x}
+    prob = 0
+    @estrategia.values.each {|x| prob = prob + x}
 
-    if @prob !=0
-      @estrategia.each {|key, value| @estrategia[key] = value/@prob.to_f}
+    if prob !=0
+      @estrategia.each {|key, value| @estrategia[key] = value/prob.to_f}
     end
   end
 end
@@ -150,30 +150,29 @@ class Mirror < Strategy
 
   def initialize mov
     @estrategia = mov
-    @original = mov
+    @original = mov.clone
     @control = true
     @anterior = nil
   end
 
   def next m
-    @aux
-    if control
+    if @control
       @control = false
       @anterior = m
-      gen_inst @estrategia
+      @estrategia
     else
-      @estrategia = anterior
+      @estrategia = @anterior
       @anterior = m
-      gen_inst @estrategia
+      @estrategia
     end
   end
 
   def to_s
-    @aux = self.class.name + "  Movimiento Inicial = " + @estrategia.to_s 
+    self.class.name + "  Movimiento Inicial = " + @estrategia.to_s 
   end
 
   def reset
-    @estrategia = @original
+    @estrategia = @original.clone
   end
 end
 
@@ -184,41 +183,40 @@ class Smart < Strategy
     @p = 0
     @r = 0
     @s = 0 
-    srand(@@semilla)
+    srand(SEMILLA)
   end
 
   def next m
-    sumar m
-    @num = rand(@p + @r + @s -1).to_int
-    puts @n
-    if (0 <= @num) && (@num < @p)
+    sumar(m)
+    num = rand(@p + @r + @s -1).to_int
+    if (0 <= num) && (num < @p)
       Scissors.new
-    elsif (@p <= @num) && (@num < @p+@r)
+    elsif (@p <= num) && (num < @p+@r)
       Paper.new
-    elsif (@p+@r <= @num) && (@num < @p+@r+@s)
+    elsif (@p+@r <= num) && (num < @p+@r+@s)
       Rock.new
     end
   end
 
   def to_s
-    @aux = self.class.name + "  p = " + @p.to_s + ", r = " + @r.to_s + ", s = " + @s.to_s 
+    self.class.name + "  p = " + @p.to_s + ", r = " + @r.to_s + ", s = " + @s.to_s 
   end
 
   def reset
     @p = 0
     @r = 0
     @s = 0 
-    srand(@@semilla)
+    srand(SEMILLA)
   end
 
   private
   def sumar m
     case m
-    when :Paper
+    when Paper
       @p += 1
-    when :Rock
+    when Rock
       @r += 1
-    when :Scissors
+    when Scissors
       @s += 1
     end
   end
@@ -244,16 +242,16 @@ class Match
   
   private
   def validar_estrategias m
-    @EsSub = true
+    esSub = true
     m.each {|x| @EsSub = @EsSub && val_tipo(x)}
-    @EsSub
+    esSub
   end
   
   def val_tipo x
-    @Es = false
+    es = false
     if (x.instance_of? Uniform) || (x.instance_of? Biased) || (x.instance_of? Mirror) || (x.instance_of? Smart)
-      @Es = true
+      es = true
     end
-    @Es
+    es
   end
 end#Fin Match
