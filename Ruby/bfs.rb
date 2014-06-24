@@ -3,7 +3,7 @@
 # implementación de +grafo+, y recorridos BFS sobre ellos
 
 ##
-# Modulo: BFS
+# Módulo: BFS
 # Éste módulo contiene tres maneras de hacer un recorrido BFS sobre una clase
 # que represente alguna abstraccion de un grafo, tenga un atributo +value+ y
 # tenga un método +each+ que reciba un bloque para iterar sobre sus hijos
@@ -88,11 +88,11 @@ end
 class BinTree
   include BFS
   # +value+: Valor almacenado en el nodo
+  attr_accessor :value
   # +left+ : BinTree izquierdo
+  attr_accessor :left 
   # +right+: BinTree derecho
-  attr_accessor :value,
-                :left, 
-                :right 
+  attr_accessor :right 
   
   ##
   # Método +initialize+
@@ -120,25 +120,6 @@ class BinTree
       raise "No blocks given!"
     end
   end
-  
-  # def to_s
-  #   "#{@value}"
-  #   #"(#{@left.to_s},#{@value},#{@right.to_s})"
-  # end
-
-  # def HacerArbol
-  #   bt8 = BinTree.new(11,nil,nil)
-  #   bt7 = BinTree.new(5,nil,nil)
-  #   bt6 = BinTree.new(6,bt7,bt8)
-  #   bt5 = BinTree.new(3,nil,nil)
-  #   bt1 = BinTree.new(7,bt5,bt6)
-  #   bt4 = BinTree.new(4,nil,nil)    
-  #   bt3 = BinTree.new(9,bt4,nil)
-  #   bt2 = BinTree.new(5,nil,bt3)
-  #   @value = 2
-  #   @left = bt1
-  #   @right = bt2
-  # end
 end
 
 ##
@@ -147,10 +128,11 @@ end
 class GraphNode
   include BFS
 
-  # +value+   : Valor almacenado en el nodo
+
   # +children+: Arreglo de sucesores GraphNode
-  attr_accessor :value, 
-                :children
+  attr_accessor :value
+  # +value+   : Valor almacenado en el nodo
+  attr_accessor :children
   
   ##
   # Método +initialize+
@@ -172,22 +154,4 @@ class GraphNode
       end 
     end unless @children.nil?    
   end
-
-  # def to_s
-  #   "#{@value}"
-  # end
-
-  # def HacerGrafo
-  #   munchen = GraphNode.new("Munchen",[])
-  #   augsburg = GraphNode.new("Augsburg",[munchen])
-  #   stuttgart = GraphNode.new("Stuttgart",[])
-  #   nurnberg = GraphNode.new("Nürnberg",[munchen,stuttgart])
-  #   erfurt = GraphNode.new("Erfurt",[])
-  #   karlsruhe = GraphNode.new("Karlsruhe",[augsburg])
-  #   kassel = GraphNode.new("Kassel",[munchen])
-  #   wuzburg = GraphNode.new("Wüzburg",[erfurt,nurnberg])
-  #   mannheim = GraphNode.new("Mannheim",[karlsruhe])
-  #   @value = "Frankfurt"
-  #   @children = [mannheim,wuzburg,kassel]
-  # end
 end
