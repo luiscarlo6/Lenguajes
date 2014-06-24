@@ -165,11 +165,7 @@ siguiente movimiento a partir del ultimo  movimiento del contrincante</p>
 
           <div class="method-description">
           
-          <p><tt>estrategia</tt> : Contendrá la lista suministrada por el usuario
-<tt>original</tt>   : Contendrá una copia de dicha lista <tt>control</tt>  
-: Boolean para determinar que jugar en la primera oportunidad
-<tt>anterior</tt>   : Contendrá el ultimo movimiento del contrincante
-<tt>contNil</tt>    : Variable de control, para saber la cantidad de nil</p>
+          <p><tt>anterior</tt>   : Contendrá el ultimo movimiento del contrincante</p>
           
           </div>
         </div>
@@ -186,11 +182,7 @@ siguiente movimiento a partir del ultimo  movimiento del contrincante</p>
 
           <div class="method-description">
           
-          <p><tt>estrategia</tt> : Contendrá la lista suministrada por el usuario
-<tt>original</tt>   : Contendrá una copia de dicha lista <tt>control</tt>  
-: Boolean para determinar que jugar en la primera oportunidad
-<tt>anterior</tt>   : Contendrá el ultimo movimiento del contrincante
-<tt>contNil</tt>    : Variable de control, para saber la cantidad de nil</p>
+          <p><tt>contNil</tt>    : Variable de control, para saber la cantidad de nil</p>
           
           </div>
         </div>
@@ -207,11 +199,8 @@ siguiente movimiento a partir del ultimo  movimiento del contrincante</p>
 
           <div class="method-description">
           
-          <p><tt>estrategia</tt> : Contendrá la lista suministrada por el usuario
-<tt>original</tt>   : Contendrá una copia de dicha lista <tt>control</tt>  
-: Boolean para determinar que jugar en la primera oportunidad
-<tt>anterior</tt>   : Contendrá el ultimo movimiento del contrincante
-<tt>contNil</tt>    : Variable de control, para saber la cantidad de nil</p>
+          <p><tt>control</tt>    : Boolean para determinar que jugar en la primera
+oportunidad</p>
           
           </div>
         </div>
@@ -228,11 +217,7 @@ siguiente movimiento a partir del ultimo  movimiento del contrincante</p>
 
           <div class="method-description">
           
-          <p><tt>estrategia</tt> : Contendrá la lista suministrada por el usuario
-<tt>original</tt>   : Contendrá una copia de dicha lista <tt>control</tt>  
-: Boolean para determinar que jugar en la primera oportunidad
-<tt>anterior</tt>   : Contendrá el ultimo movimiento del contrincante
-<tt>contNil</tt>    : Variable de control, para saber la cantidad de nil</p>
+          <p><tt>estrategia</tt> : Contendrá la lista suministrada por el usuario</p>
           
           </div>
         </div>
@@ -249,11 +234,7 @@ siguiente movimiento a partir del ultimo  movimiento del contrincante</p>
 
           <div class="method-description">
           
-          <p><tt>estrategia</tt> : Contendrá la lista suministrada por el usuario
-<tt>original</tt>   : Contendrá una copia de dicha lista <tt>control</tt>  
-: Boolean para determinar que jugar en la primera oportunidad
-<tt>anterior</tt>   : Contendrá el ultimo movimiento del contrincante
-<tt>contNil</tt>    : Variable de control, para saber la cantidad de nil</p>
+          <p><tt>original</tt>   : Contendrá una copia de dicha lista</p>
           
           </div>
         </div>
@@ -287,7 +268,7 @@ href="Mirror.html">Mirror</a> +mov: movimiento suministrado por el usuario+</p>
             
             <div class="method-source-code" id="new-source">
 <pre>
-<span class="ruby-comment"># File rps.rb, line 321</span>
+<span class="ruby-comment"># File rps.rb, line 330</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span> <span class="ruby-identifier">mov</span>
   <span class="ruby-ivar">@estrategia</span> = <span class="ruby-identifier">mov</span>
   <span class="ruby-ivar">@original</span> = <span class="ruby-identifier">mov</span>.<span class="ruby-identifier">clone</span>
@@ -331,7 +312,7 @@ contrincante+</p>
             
             <div class="method-source-code" id="next-source">
 <pre>
-<span class="ruby-comment"># File rps.rb, line 333</span>
+<span class="ruby-comment"># File rps.rb, line 342</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">next</span> <span class="ruby-identifier">m</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">m</span><span class="ruby-operator">==</span><span class="ruby-keyword">nil</span>
     <span class="ruby-ivar">@contNil</span> <span class="ruby-operator">+=</span><span class="ruby-value">1</span>
@@ -382,7 +363,7 @@ contrincante+</p>
             
             <div class="method-source-code" id="reset-source">
 <pre>
-<span class="ruby-comment"># File rps.rb, line 365</span>
+<span class="ruby-comment"># File rps.rb, line 374</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">reset</span>
   <span class="ruby-ivar">@estrategia</span> = <span class="ruby-ivar">@original</span>.<span class="ruby-identifier">clone</span>
   <span class="ruby-ivar">@control</span> = <span class="ruby-keyword">true</span>
@@ -420,7 +401,7 @@ como un String</p>
             
             <div class="method-source-code" id="to_s-source">
 <pre>
-<span class="ruby-comment"># File rps.rb, line 358</span>
+<span class="ruby-comment"># File rps.rb, line 367</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">to_s</span>
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;  Movimiento Inicial = &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@estrategia</span>.<span class="ruby-identifier">to_s</span> 
 <span class="ruby-keyword">end</span></pre>

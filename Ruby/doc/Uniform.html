@@ -165,9 +165,7 @@ siguiente movimiento siguiendo una distribución Uniforme</p>
 
           <div class="method-description">
           
-          <p><tt>estrategia</tt>: Contendrá la lista suministrada por el usuario
-<tt>original</tt> : Contendrá una copia de dicha lista <tt>contNil</tt>:
-Variable de control, para saber la cantidad de nil</p>
+          <p><tt>contNil</tt>: Variable de control, para saber la cantidad de nil</p>
           
           </div>
         </div>
@@ -184,9 +182,7 @@ Variable de control, para saber la cantidad de nil</p>
 
           <div class="method-description">
           
-          <p><tt>estrategia</tt>: Contendrá la lista suministrada por el usuario
-<tt>original</tt> : Contendrá una copia de dicha lista <tt>contNil</tt>:
-Variable de control, para saber la cantidad de nil</p>
+          <p><tt>estrategia</tt>: Contendrá la lista suministrada por el usuario</p>
           
           </div>
         </div>
@@ -203,9 +199,7 @@ Variable de control, para saber la cantidad de nil</p>
 
           <div class="method-description">
           
-          <p><tt>estrategia</tt>: Contendrá la lista suministrada por el usuario
-<tt>original</tt> : Contendrá una copia de dicha lista <tt>contNil</tt>:
-Variable de control, para saber la cantidad de nil</p>
+          <p><tt>original</tt> : Contendrá una copia de dicha lista</p>
           
           </div>
         </div>
@@ -239,7 +233,7 @@ href="Uniform.html">Uniform</a> +lista: lista suministrada por el usuario+</p>
             
             <div class="method-source-code" id="new-source">
 <pre>
-<span class="ruby-comment"># File rps.rb, line 178</span>
+<span class="ruby-comment"># File rps.rb, line 180</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span> <span class="ruby-identifier">lista</span>
   <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-string">'La Lista no puede ser vacia'</span> <span class="ruby-keyword">unless</span> (<span class="ruby-keyword">not</span> <span class="ruby-identifier">lista</span>.<span class="ruby-identifier">empty?</span>)
   <span class="ruby-ivar">@estrategia</span> = <span class="ruby-identifier">lista</span>.<span class="ruby-identifier">uniq</span>
@@ -282,7 +276,7 @@ contrincante+</p>
             
             <div class="method-source-code" id="next-source">
 <pre>
-<span class="ruby-comment"># File rps.rb, line 189</span>
+<span class="ruby-comment"># File rps.rb, line 191</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">next</span> <span class="ruby-identifier">m</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">m</span><span class="ruby-operator">==</span><span class="ruby-keyword">nil</span>
     <span class="ruby-ivar">@contNil</span> <span class="ruby-operator">+=</span><span class="ruby-value">1</span>
@@ -322,7 +316,7 @@ contrincante+</p>
             
             <div class="method-source-code" id="reset-source">
 <pre>
-<span class="ruby-comment"># File rps.rb, line 212</span>
+<span class="ruby-comment"># File rps.rb, line 214</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">reset</span>
   <span class="ruby-ivar">@estrategia</span> = <span class="ruby-ivar">@original</span>.<span class="ruby-identifier">clone</span>
   <span class="ruby-ivar">@contNil</span> = <span class="ruby-value">0</span>
@@ -358,7 +352,7 @@ como un String</p>
             
             <div class="method-source-code" id="to_s-source">
 <pre>
-<span class="ruby-comment"># File rps.rb, line 203</span>
+<span class="ruby-comment"># File rps.rb, line 205</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">to_s</span>
   <span class="ruby-identifier">aux</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot; [&quot;</span>
   <span class="ruby-ivar">@estrategia</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span><span class="ruby-identifier">aux</span> = <span class="ruby-identifier">aux</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">x</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;, &quot;</span>}

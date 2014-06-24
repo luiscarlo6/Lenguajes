@@ -170,10 +170,7 @@
 
           <div class="method-description">
           
-          <p><tt>jugadores</tt>   : mapa suministrado por el usuario <tt>juego</tt>     
-: mapa del juego creado a partir del mapa de jugadores <tt>movJ1</tt>      
-: movimiento del jugador uno <tt>movJ2</tt>       : movimiento del jugador
-dos</p>
+          <p><tt>juego</tt>       : mapa del juego creado a partir del mapa de jugadores</p>
           
           </div>
         </div>
@@ -190,10 +187,7 @@ dos</p>
 
           <div class="method-description">
           
-          <p><tt>jugadores</tt>   : mapa suministrado por el usuario <tt>juego</tt>     
-: mapa del juego creado a partir del mapa de jugadores <tt>movJ1</tt>      
-: movimiento del jugador uno <tt>movJ2</tt>       : movimiento del jugador
-dos</p>
+          <p><tt>jugadores</tt>   : mapa suministrado por el usuario</p>
           
           </div>
         </div>
@@ -210,10 +204,7 @@ dos</p>
 
           <div class="method-description">
           
-          <p><tt>jugadores</tt>   : mapa suministrado por el usuario <tt>juego</tt>     
-: mapa del juego creado a partir del mapa de jugadores <tt>movJ1</tt>      
-: movimiento del jugador uno <tt>movJ2</tt>       : movimiento del jugador
-dos</p>
+          <p><tt>movJ1</tt>       : movimiento del jugador uno</p>
           
           </div>
         </div>
@@ -230,10 +221,7 @@ dos</p>
 
           <div class="method-description">
           
-          <p><tt>jugadores</tt>   : mapa suministrado por el usuario <tt>juego</tt>     
-: mapa del juego creado a partir del mapa de jugadores <tt>movJ1</tt>      
-: movimiento del jugador uno <tt>movJ2</tt>       : movimiento del jugador
-dos</p>
+          <p><tt>movJ2</tt>       : movimiento del jugador dos</p>
           
           </div>
         </div>
@@ -267,7 +255,7 @@ dos</p>
             
             <div class="method-source-code" id="new-source">
 <pre>
-<span class="ruby-comment"># File rps.rb, line 474</span>
+<span class="ruby-comment"># File rps.rb, line 489</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span> <span class="ruby-identifier">mapa</span>
   <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>,<span class="ruby-string">'El mapa de los Jugadores no puede ser vacío'</span> <span class="ruby-keyword">unless</span> (<span class="ruby-keyword">not</span> <span class="ruby-identifier">mapa</span>.<span class="ruby-identifier">empty?</span>)
   <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>,<span class="ruby-string">'Deben haber exactamente 2 jugadores'</span> <span class="ruby-keyword">unless</span> (<span class="ruby-identifier">mapa</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">2</span>)
@@ -320,7 +308,7 @@ dos</p>
             
             <div class="method-source-code" id="restart-source">
 <pre>
-<span class="ruby-comment"># File rps.rb, line 553</span>
+<span class="ruby-comment"># File rps.rb, line 568</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">restart</span>
   <span class="ruby-ivar">@jugadores</span>.<span class="ruby-identifier">values</span>[<span class="ruby-value">0</span>] = <span class="ruby-ivar">@jugadores</span>.<span class="ruby-identifier">values</span>[<span class="ruby-value">0</span>].<span class="ruby-identifier">reset</span>
   <span class="ruby-ivar">@jugadores</span>.<span class="ruby-identifier">values</span>[<span class="ruby-value">1</span>] = <span class="ruby-ivar">@jugadores</span>.<span class="ruby-identifier">values</span>[<span class="ruby-value">1</span>].<span class="ruby-identifier">reset</span>
@@ -359,7 +347,7 @@ jugarse+</p>
             
             <div class="method-source-code" id="rounds-source">
 <pre>
-<span class="ruby-comment"># File rps.rb, line 503</span>
+<span class="ruby-comment"># File rps.rb, line 518</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">rounds</span> <span class="ruby-identifier">n</span>
   <span class="ruby-identifier">i</span>=<span class="ruby-value">0</span>
   <span class="ruby-identifier">puntosJugador1</span> = <span class="ruby-value">0</span>
@@ -412,7 +400,7 @@ como un String</p>
             
             <div class="method-source-code" id="to_s-source">
 <pre>
-<span class="ruby-comment"># File rps.rb, line 495</span>
+<span class="ruby-comment"># File rps.rb, line 510</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">to_s</span>
   <span class="ruby-ivar">@jugadores</span>.<span class="ruby-identifier">to_s</span>
 <span class="ruby-keyword">end</span></pre>
@@ -446,7 +434,7 @@ ganadas +n : numero de partidas a ganar+</p>
             
             <div class="method-source-code" id="upto-source">
 <pre>
-<span class="ruby-comment"># File rps.rb, line 530</span>
+<span class="ruby-comment"># File rps.rb, line 545</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">upto</span> <span class="ruby-identifier">n</span>
   <span class="ruby-identifier">pm1</span> = <span class="ruby-ivar">@movJ1</span>
   <span class="ruby-identifier">pm2</span> = <span class="ruby-ivar">@movJ2</span>
@@ -503,7 +491,7 @@ estrategia+</p>
             
             <div class="method-source-code" id="val_tipo-source">
 <pre>
-<span class="ruby-comment"># File rps.rb, line 577</span>
+<span class="ruby-comment"># File rps.rb, line 592</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">val_tipo</span> <span class="ruby-identifier">x</span>
   <span class="ruby-identifier">es</span> = <span class="ruby-keyword">false</span>
   <span class="ruby-keyword">if</span> (<span class="ruby-identifier">x</span>.<span class="ruby-identifier">instance_of?</span> <span class="ruby-constant">Uniform</span>) <span class="ruby-operator">||</span> (<span class="ruby-identifier">x</span>.<span class="ruby-identifier">instance_of?</span> <span class="ruby-constant">Biased</span>) <span class="ruby-operator">||</span> (<span class="ruby-identifier">x</span>.<span class="ruby-identifier">instance_of?</span> <span class="ruby-constant">Mirror</span>) <span class="ruby-operator">||</span> (<span class="ruby-identifier">x</span>.<span class="ruby-identifier">instance_of?</span> <span class="ruby-constant">Smart</span>)
@@ -543,7 +531,7 @@ posibles estrategia+</p>
             
             <div class="method-source-code" id="validar_estrategias-source">
 <pre>
-<span class="ruby-comment"># File rps.rb, line 567</span>
+<span class="ruby-comment"># File rps.rb, line 582</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">validar_estrategias</span> <span class="ruby-identifier">m</span>
   <span class="ruby-identifier">esSub</span> = <span class="ruby-keyword">true</span>
   <span class="ruby-identifier">m</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-ivar">@EsSub</span> = <span class="ruby-ivar">@EsSub</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">val_tipo</span>(<span class="ruby-identifier">x</span>)}

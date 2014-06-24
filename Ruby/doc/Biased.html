@@ -167,10 +167,7 @@ siguiente movimiento siguiendo una distribución Sesgada</p>
 
           <div class="method-description">
           
-          <p><tt>estrategia</tt>: Contendrá la lista suministrada por el usuario
-<tt>original</tt> : Contendrá una copia de dicha lista
-<tt>probabilidad</tt> : Contendrá la suma de todas las probabilidades
-<tt>contNil</tt>: Variable de control, para saber la cantidad de nil</p>
+          <p><tt>contNil</tt>: Variable de control, para saber la cantidad de nil</p>
           
           </div>
         </div>
@@ -187,10 +184,7 @@ siguiente movimiento siguiendo una distribución Sesgada</p>
 
           <div class="method-description">
           
-          <p><tt>estrategia</tt>: Contendrá la lista suministrada por el usuario
-<tt>original</tt> : Contendrá una copia de dicha lista
-<tt>probabilidad</tt> : Contendrá la suma de todas las probabilidades
-<tt>contNil</tt>: Variable de control, para saber la cantidad de nil</p>
+          <p><tt>estrategia</tt>: Contendrá la lista suministrada por el usuario</p>
           
           </div>
         </div>
@@ -207,10 +201,7 @@ siguiente movimiento siguiendo una distribución Sesgada</p>
 
           <div class="method-description">
           
-          <p><tt>estrategia</tt>: Contendrá la lista suministrada por el usuario
-<tt>original</tt> : Contendrá una copia de dicha lista
-<tt>probabilidad</tt> : Contendrá la suma de todas las probabilidades
-<tt>contNil</tt>: Variable de control, para saber la cantidad de nil</p>
+          <p><tt>original</tt> : Contendrá una copia de dicha lista</p>
           
           </div>
         </div>
@@ -227,10 +218,7 @@ siguiente movimiento siguiendo una distribución Sesgada</p>
 
           <div class="method-description">
           
-          <p><tt>estrategia</tt>: Contendrá la lista suministrada por el usuario
-<tt>original</tt> : Contendrá una copia de dicha lista
-<tt>probabilidad</tt> : Contendrá la suma de todas las probabilidades
-<tt>contNil</tt>: Variable de control, para saber la cantidad de nil</p>
+          <p><tt>probabilidad</tt> : Contendrá la suma de todas las probabilidades</p>
           
           </div>
         </div>
@@ -265,7 +253,7 @@ usuario+</p>
             
             <div class="method-source-code" id="new-source">
 <pre>
-<span class="ruby-comment"># File rps.rb, line 235</span>
+<span class="ruby-comment"># File rps.rb, line 240</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span> <span class="ruby-identifier">mapa</span>
   <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-string">'El mapa no puede ser vacio'</span> <span class="ruby-keyword">unless</span> (<span class="ruby-keyword">not</span> <span class="ruby-identifier">mapa</span>.<span class="ruby-identifier">empty?</span>)
   <span class="ruby-ivar">@estrategia</span> = <span class="ruby-identifier">mapa</span>
@@ -310,7 +298,7 @@ contrincante+</p>
             
             <div class="method-source-code" id="next-source">
 <pre>
-<span class="ruby-comment"># File rps.rb, line 248</span>
+<span class="ruby-comment"># File rps.rb, line 253</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">next</span> <span class="ruby-identifier">m</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">m</span><span class="ruby-operator">==</span><span class="ruby-keyword">nil</span>
     <span class="ruby-ivar">@contNil</span> <span class="ruby-operator">+=</span><span class="ruby-value">1</span>
@@ -362,7 +350,7 @@ contrincante+</p>
             
             <div class="method-source-code" id="reset-source">
 <pre>
-<span class="ruby-comment"># File rps.rb, line 283</span>
+<span class="ruby-comment"># File rps.rb, line 288</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">reset</span>
   <span class="ruby-ivar">@estrategia</span> = <span class="ruby-ivar">@original</span>.<span class="ruby-identifier">clone</span>
   <span class="ruby-identifier">cal_prob</span>
@@ -399,7 +387,7 @@ como un String</p>
             
             <div class="method-source-code" id="to_s-source">
 <pre>
-<span class="ruby-comment"># File rps.rb, line 274</span>
+<span class="ruby-comment"># File rps.rb, line 279</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">to_s</span>
   <span class="ruby-identifier">aux</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot; {&quot;</span>
   <span class="ruby-ivar">@estrategia</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span> <span class="ruby-identifier">aux</span> = <span class="ruby-identifier">aux</span> <span class="ruby-operator">+</span> <span class="ruby-node">&quot;:#{key} =&gt; #{value}, &quot;</span> }
@@ -441,7 +429,7 @@ las probabilidades asociadas</p>
             
             <div class="method-source-code" id="cal_prob-source">
 <pre>
-<span class="ruby-comment"># File rps.rb, line 294</span>
+<span class="ruby-comment"># File rps.rb, line 299</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">cal_prob</span>
   <span class="ruby-identifier">prob</span> = <span class="ruby-value">0</span>
   <span class="ruby-ivar">@estrategia</span>.<span class="ruby-identifier">values</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-identifier">prob</span> = <span class="ruby-identifier">prob</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">x</span>}

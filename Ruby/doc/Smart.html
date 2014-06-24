@@ -168,11 +168,7 @@ usuario</p>
 
           <div class="method-description">
           
-          <p><tt>p</tt>       : Cantidad de <a href="Paper.html">Paper</a> jugadas por
-el contrincante <tt>r</tt>       : Cantidad de <a href="Rock.html">Rock</a>
-jugadas por el contrincante <tt>s</tt>       : Cantidad de <a
-href="Scissors.html">Scissors</a> jugadas por el contrincante
-<tt>contNil</tt> : Variable de control, para saber la cantidad de nil</p>
+          <p><tt>contNil</tt> : Variable de control, para saber la cantidad de nil</p>
           
           </div>
         </div>
@@ -190,10 +186,7 @@ href="Scissors.html">Scissors</a> jugadas por el contrincante
           <div class="method-description">
           
           <p><tt>p</tt>       : Cantidad de <a href="Paper.html">Paper</a> jugadas por
-el contrincante <tt>r</tt>       : Cantidad de <a href="Rock.html">Rock</a>
-jugadas por el contrincante <tt>s</tt>       : Cantidad de <a
-href="Scissors.html">Scissors</a> jugadas por el contrincante
-<tt>contNil</tt> : Variable de control, para saber la cantidad de nil</p>
+el contrincante</p>
           
           </div>
         </div>
@@ -210,11 +203,8 @@ href="Scissors.html">Scissors</a> jugadas por el contrincante
 
           <div class="method-description">
           
-          <p><tt>p</tt>       : Cantidad de <a href="Paper.html">Paper</a> jugadas por
-el contrincante <tt>r</tt>       : Cantidad de <a href="Rock.html">Rock</a>
-jugadas por el contrincante <tt>s</tt>       : Cantidad de <a
-href="Scissors.html">Scissors</a> jugadas por el contrincante
-<tt>contNil</tt> : Variable de control, para saber la cantidad de nil</p>
+          <p><tt>r</tt>       : Cantidad de <a href="Rock.html">Rock</a> jugadas por el
+contrincante</p>
           
           </div>
         </div>
@@ -231,11 +221,8 @@ href="Scissors.html">Scissors</a> jugadas por el contrincante
 
           <div class="method-description">
           
-          <p><tt>p</tt>       : Cantidad de <a href="Paper.html">Paper</a> jugadas por
-el contrincante <tt>r</tt>       : Cantidad de <a href="Rock.html">Rock</a>
-jugadas por el contrincante <tt>s</tt>       : Cantidad de <a
-href="Scissors.html">Scissors</a> jugadas por el contrincante
-<tt>contNil</tt> : Variable de control, para saber la cantidad de nil</p>
+          <p><tt>s</tt>       : Cantidad de <a href="Scissors.html">Scissors</a> jugadas
+por el contrincante</p>
           
           </div>
         </div>
@@ -269,7 +256,7 @@ href="Smart.html">Smart</a></p>
             
             <div class="method-source-code" id="new-source">
 <pre>
-<span class="ruby-comment"># File rps.rb, line 389</span>
+<span class="ruby-comment"># File rps.rb, line 401</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>
   <span class="ruby-ivar">@p</span> = <span class="ruby-value">0</span>
   <span class="ruby-ivar">@r</span> = <span class="ruby-value">0</span>
@@ -313,7 +300,7 @@ contrincante+</p>
             
             <div class="method-source-code" id="next-source">
 <pre>
-<span class="ruby-comment"># File rps.rb, line 401</span>
+<span class="ruby-comment"># File rps.rb, line 413</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">next</span> <span class="ruby-identifier">m</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">m</span><span class="ruby-operator">==</span><span class="ruby-keyword">nil</span> 
     <span class="ruby-ivar">@contNil</span> <span class="ruby-operator">+=</span><span class="ruby-value">1</span>
@@ -363,7 +350,7 @@ contrincante+</p>
             
             <div class="method-source-code" id="reset-source">
 <pre>
-<span class="ruby-comment"># File rps.rb, line 432</span>
+<span class="ruby-comment"># File rps.rb, line 444</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">reset</span>
   <span class="ruby-ivar">@p</span> = <span class="ruby-value">0</span>
   <span class="ruby-ivar">@r</span> = <span class="ruby-value">0</span>
@@ -402,7 +389,7 @@ como un String</p>
             
             <div class="method-source-code" id="to_s-source">
 <pre>
-<span class="ruby-comment"># File rps.rb, line 425</span>
+<span class="ruby-comment"># File rps.rb, line 437</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">to_s</span>
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;  p = &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@p</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;, r = &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@r</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;, s = &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@s</span>.<span class="ruby-identifier">to_s</span> 
 <span class="ruby-keyword">end</span></pre>
@@ -442,7 +429,7 @@ movimiento a ser sumado+</p>
             
             <div class="method-source-code" id="sumar-source">
 <pre>
-<span class="ruby-comment"># File rps.rb, line 446</span>
+<span class="ruby-comment"># File rps.rb, line 458</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">sumar</span> <span class="ruby-identifier">m</span>
   <span class="ruby-keyword">case</span> <span class="ruby-identifier">m</span>
   <span class="ruby-keyword">when</span> <span class="ruby-constant">Paper</span>

@@ -169,9 +169,11 @@ end
 class Uniform < Strategy
   
   # +estrategia+: Contendrá la lista suministrada por el usuario
+  attr_accessor :estrategia
   # +original+ : Contendrá una copia de dicha lista
+  attr_accessor :original
   # +contNil+: Variable de control, para saber la cantidad de nil
-  attr_accessor :estrategia, :original, :contNil
+  attr_accessor :contNil
   
   ##
   # Método +initialize+
@@ -225,10 +227,13 @@ end
 class Biased < Strategy
   
   # +estrategia+: Contendrá la lista suministrada por el usuario
+  attr_accessor :estrategia
   # +original+ : Contendrá una copia de dicha lista
+  attr_accessor :original
   # +probabilidad+ : Contendrá la suma de todas las probabilidades
+  attr_accessor :probabilidad 
   # +contNil+: Variable de control, para saber la cantidad de nil
-  attr_accessor :estrategia, :original,:probabilidad, :contNil
+  attr_accessor :contNil
   
   ##
   # Método +initialize+
@@ -310,11 +315,15 @@ end
 class Mirror < Strategy
   
   # +estrategia+ : Contendrá la lista suministrada por el usuario
+  attr_accessor :estrategia
   # +original+   : Contendrá una copia de dicha lista
+  attr_accessor :original
   # +control+    : Boolean para determinar que jugar en la primera oportunidad
+  attr_accessor :control
   # +anterior+   : Contendrá el ultimo movimiento del contrincante
+  attr_accessor :anterior
   # +contNil+    : Variable de control, para saber la cantidad de nil
-  attr_accessor :estrategia, :original, :control, :anterior, :contNil
+  attr_accessor :contNil
   
   ##
   # Método +initialize+
@@ -380,10 +389,13 @@ end
 class Smart < Strategy
   
   # +p+       : Cantidad de Paper jugadas por el contrincante
+  attr_accessor :p
   # +r+       : Cantidad de Rock jugadas por el contrincante
+  attr_accessor :r
   # +s+       : Cantidad de Scissors jugadas por el contrincante
+  attr_accessor :s
   # +contNil+ : Variable de control, para saber la cantidad de nil
-  attr_accessor :p, :r, :s, :contNil
+  attr_accessor :contNil
   
   ##
   # Método +initialize+
@@ -464,10 +476,13 @@ end
 class Match
   
   # +jugadores+   : mapa suministrado por el usuario
+  attr_accessor :jugadores
   # +juego+       : mapa del juego creado a partir del mapa de jugadores
+  attr_accessor :juego
   # +movJ1+       : movimiento del jugador uno
+  attr_accessor :movJ1
   # +movJ2+       : movimiento del jugador dos
-  attr_accessor :jugadores, :juego, :movJ1, :movJ2
+  attr_accessor :movJ2
   
   ##
   # Método +initialize+
@@ -533,18 +548,22 @@ class Match
     pm1 = @movJ1
     pm2 = @movJ2
     
-    while true
-      puntuacion = pm1.score(pm2)
-      @juego[(@juego.keys[0])] += puntuacion[0]
-      @juego[(@juego.keys[1])] += puntuacion[1]
-      @juego[(@juego.keys[2])] += 1
-      @movJ1 = @jugadores.values[0].next(pm2)
-      @movJ2 = @jugadores.values[1].next(pm1)
-      pm1 = @movJ1
-      pm2 = @movJ2
-      if @juego[(@juego.keys[0])] == n || @juego[(@juego.keys[1])] == n
-        break
+    if (@juego[(@juego.keys[0])] < n) && @juego[(@juego.keys[1])] < n 
+      while true
+        puntuacion = pm1.score(pm2)
+        @juego[(@juego.keys[0])] += puntuacion[0]
+        @juego[(@juego.keys[1])] += puntuacion[1]
+        @juego[(@juego.keys[2])] += 1
+        @movJ1 = @jugadores.values[0].next(pm2)
+        @movJ2 = @jugadores.values[1].next(pm1)
+        pm1 = @movJ1
+        pm2 = @movJ2
+        if @juego[(@juego.keys[0])] == n || @juego[(@juego.keys[1])] == n
+          break
+        end
       end
+    else
+      puts "Uno de los usuarios ya tiene una puntuación superior a " + n.to_s
     end
     @juego
   end

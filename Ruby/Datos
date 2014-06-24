@@ -30,5 +30,7 @@ st = Smart.new
 st.next
 st.reset
 
-juego1 = Match.new( { j1=> b, j2 => st } )
+juego1 = Match.new( { j1=> u, j2 => b } )
+juego2 = Match.new( { j1=> b, j2 => m } )
+juego1 = Match.new( { j1=> m, j2 => st} )
 
