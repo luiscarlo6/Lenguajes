@@ -1,6 +1,13 @@
+#!/usr/bin/ruby
 # -*- coding: utf-8 -*-
 # Éste archivo contiene implementación de +arbol binario+,
 # implementación de +grafo+, y recorridos BFS sobre ellos
+
+# Tarea de Ruby
+# CI3661 - Taller de Lenguajes de Programación I
+# Grupo # 9
+# Jose Julian Prado 09-11006
+# Luiscarlo Rivera  09-11020
 
 ##
 # Módulo: BFS
