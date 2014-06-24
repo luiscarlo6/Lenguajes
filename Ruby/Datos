@@ -1,0 +1,36 @@
+#variables de tipo
+
+r = Rock.new
+p = Paper.new
+s = Scissors.new
+
+j1 = Strategy.new("Jose")
+j2 = Strategy.new("Julian")
+
+
+#estrategias
+
+u = Uniform.new( [] )
+u = Uniform.new( [ r, s, p ] )
+u.reset
+u.next
+u.reset
+
+b = Biased.new( {} )
+b = Biased.new( { r => 1, s => 3, p => 2 } )
+b.reset
+b.next
+b.reset
+
+m = Mirror.new (r)
+m.next
+m.reset
+
+st = Smart.new
+st.next
+st.reset
+
+juego1 = Match.new( { j1=> u, j2 => b } )
+juego2 = Match.new( { j1=> b, j2 => m } )
+juego1 = Match.new( { j1=> m, j2 => st} )
+
