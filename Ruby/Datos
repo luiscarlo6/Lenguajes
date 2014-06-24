@@ -14,5 +14,5 @@ b = Biased.new( { r => 1, s => 3, p => 2 } )
 m = Mirror.new (r)
 st = Smart.new
 
-juego = m = Match.new( { j1=> u, j2 => m } )
+juego = Match.new( { j1=> u, j2 => m } )
 
