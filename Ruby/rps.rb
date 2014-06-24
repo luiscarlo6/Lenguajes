@@ -280,7 +280,7 @@ end
 ###################
 
 class Match
-  attr_accessor :jugadores, :juego#, :movJ1, :movJ2
+  attr_accessor :jugadores, :juego, :movJ1, :movJ2
   
   def initialize mapa
     raise ArgumentError, 'El mapa de los Jugadores no puede ser vacio' unless (not mapa.empty?)
@@ -288,12 +288,16 @@ class Match
     raise ArgumentError, 'Una de las Estrategias es invalida' unless (validar_estrategias mapa.values)
     @jugadores = mapa
     @juego =  { @jugadores.keys[0] => 0, @jugadores.keys[1] => 0, "Rondas" => 0}
+    @jugadores.values[0].reset
+    @jugadores.values[1].reset
+    @movJ1 = @jugadores.values[0].next(nil)
+    @movJ2 = @jugadores.values[1].next(nil)
 #     puts "Estrategia 1 =  " + @jugadores[(@jugadores.keys[0])].to_s
 #     puts "Estrategia 2 =  " + @jugadores[(@jugadores.keys[1])].to_s
 #     @movJ1 = @jugadores.values[0].next(nil)
 #     @movJ2 = @jugadores[(@jugadores.keys[1])].next(nil)
 #     puts "\n\nmovJ1 = " + @jugadores[(@jugadores.keys[0])].next(nil).to_s
-#     puts "movJ2 = " + @movJ2.to_s
+#     puts "Estrategia 2" + @jugadores.values[1].to_s
   end
   
   def to_s
@@ -304,9 +308,11 @@ class Match
     i=0
     puntosJugador1 = 0
     puntosJugador2 = 0
-    strateg =@jugadores.values
-    pm1 = strateg[0].next(nil)
-    pm2 = strateg[1].next(nil)
+#      puts "Entrando:\n\nmovJ1 = " + @movJ1.to_s
+#       puts "movJ2 = " + @movJ2.to_s
+#     strateg =@jugadores.values
+    pm1 = @movJ1
+    pm2 = @movJ2
     
     while i<n
 #       puts "movJ1 = " + @movJ1.to_s
@@ -314,10 +320,10 @@ class Match
       puntuacion = pm1.score(pm2)
       puntosJugador1 += puntuacion[0]
       puntosJugador2 += puntuacion[1]
-      movJ1 = strateg[0].next(pm2)
-      movJ2 = strateg[1].next(pm1)
-      pm1 = movJ1
-      pm2 = movJ2
+      @movJ1 = @jugadores.values[0].next(pm2)
+      @movJ2 = @jugadores.values[1].next(pm1)
+      pm1 = @movJ1
+      pm2 = @movJ2
       i +=1
     end
     @juego[(@juego.keys[0])] += puntosJugador1
@@ -327,7 +333,7 @@ class Match
   end
   
   def upto n
-    strateg =@jugadores.values
+#     strateg =@jugadores.values
     pm1 = @movJ1
     pm2 = @movJ2
     
@@ -336,8 +342,10 @@ class Match
       @juego[(@juego.keys[0])] += puntuacion[0]
       @juego[(@juego.keys[1])] += puntuacion[1]
       @juego[(@juego.keys[2])] += 1
-      @movJ1 = strateg[0].next(pm2)
-      @movJ2 = strateg[1].next(pm1)
+#       @movJ1 = strateg[0].next(pm2)
+#       @movJ2 = strateg[1].next(pm1)
+      @movJ1 = @jugadores.values[0].next(pm2)
+      @movJ2 = @jugadores.values[1].next(pm1)
       pm1 = @movJ1
       pm2 = @movJ2
       if @juego[(@juego.keys[0])] == n || @juego[(@juego.keys[1])] == n
@@ -348,10 +356,12 @@ class Match
   end
   
   def restart
-    @jugadores = @jugadores.each {|key, value| @jugadores[key] = @jugadores[key].reset}
+#     @jugadores = @jugadores.each {|key, value| @jugadores[key] = @jugadores[key].reset}
+    @jugadores.values[0].reset
+    @jugadores.values[1].reset
     @juego =  { @jugadores.keys[0] => 0, @jugadores.keys[1] => 0, "Rondas" => 0}
-    @movJ1 = @jugadores[(@jugadores.keys[0])].next(nil)
-    @movJ2 = @jugadores[(@jugadores.keys[1])].next(nil)
+    @movJ1 = @jugadores.values[0].next(nil)
+    @movJ2 = @jugadores.values[1].next(nil)
     self
   end
   
