@@ -286,10 +286,11 @@ class Match
     raise ArgumentError, 'El mapa de los Jugadores no puede ser vacio' unless (not mapa.empty?)
     raise ArgumentError, 'Deben haber exactamente 2 jugadores' unless (mapa.size == 2)
     raise ArgumentError, 'Una de las Estrategias es invalida' unless (validar_estrategias mapa.values)
+    raise ArgumentError, 'No puede pasar la misma instancia como estrategia' unless (mapa.values[0]!=mapa.values[1])
     @jugadores = mapa
     @juego =  { @jugadores.keys[0] => 0, @jugadores.keys[1] => 0, "Rondas" => 0}
-    @jugadores.values[0].reset
-    @jugadores.values[1].reset
+    @jugadores.values[0] = @jugadores.values[0].reset.clone
+    @jugadores.values[1] = @jugadores.values[1].reset.clone
     @movJ1 = @jugadores.values[0].next(nil)
     @movJ2 = @jugadores.values[1].next(nil)
 #     puts "Estrategia 1 =  " + @jugadores[(@jugadores.keys[0])].to_s
@@ -357,8 +358,8 @@ class Match
   
   def restart
 #     @jugadores = @jugadores.each {|key, value| @jugadores[key] = @jugadores[key].reset}
-    @jugadores.values[0].reset
-    @jugadores.values[1].reset
+    @jugadores.values[0] = @jugadores.values[0].reset
+    @jugadores.values[1] = @jugadores.values[1].reset
     @juego =  { @jugadores.keys[0] => 0, @jugadores.keys[1] => 0, "Rondas" => 0}
     @movJ1 = @jugadores.values[0].next(nil)
     @movJ2 = @jugadores.values[1].next(nil)
