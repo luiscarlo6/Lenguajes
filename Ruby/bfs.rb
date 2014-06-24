@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+# Éste archivo contiene implementación de +arbol binario+,
+# implementación de +grafo+, y recorridos BFS sobre ellos
+
 ##
 # Modulo: BFS
 # Éste módulo contiene tres maneras de hacer un recorrido BFS sobre una clase
