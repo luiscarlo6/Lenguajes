@@ -4,10 +4,15 @@ r = Rock.new
 p = Paper.new
 s = Scissors.new
 
-j = Strategy.new("Jose")
+j1 = Strategy.new("Jose")
+j2 = Strategy.new("Julian")
+
 
 #estrategias
 u = Uniform.new( [ r, s, p ] )
 b = Biased.new( { r => 1, s => 3, p => 2 } )
 m = Mirror.new (r)
 st = Smart.new
+
+juego = m = Match.new( { j1=> u, j2 => m } )
+

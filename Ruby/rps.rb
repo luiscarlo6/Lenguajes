@@ -116,11 +116,21 @@ class Biased < Strategy
   end
 
   def next m
-    tmp = @probabilidad.first
-    @probabilidad = @probabilidad.rotate
-    valor = @estrategia.key(tmp)
-#     gen_inst @valor
-    valor
+    num = rand()
+    arr = @probabilidad.clone
+    tam = arr.size
+    i = 0
+    cInf = 0
+    cSup = arr.first
+    while i < tam
+      if cInf <= num && num < cSup
+        return @estrategia.key arr[i]
+      end
+      arr = arr.rotate
+      cInf = cSup
+      cSup += arr.first
+      i += 1
+    end
   end
 
   def to_s
@@ -226,32 +236,123 @@ end
 ######EL JUEGO#####
 ###################
 
-class Match
-  attr_accessor :jugadores
-  
-  def initialize mapa
-    raise ArgumentError, 'El mapa de los Jugadores no puede ser vacio' unless (not mapa.empty?)
-    raise ArgumentError, 'Deben haber exactamente 2 jugadores' unless (mapa.size == 2)
-    raise ArgumentError, 'Una de las Estrategias es invalida' unless (validar_estrategias mapa.values)
-    @jugadores = mapa
+# class Match
+#   attr_accessor :jugadores
+#   
+#   def initialize mapa
+#     raise ArgumentError, 'El mapa de los Jugadores no puede ser vacio' unless (not mapa.empty?)
+#     raise ArgumentError, 'Deben haber exactamente 2 jugadores' unless (mapa.size == 2)
+#     raise ArgumentError, 'Una de las Estrategias es invalida' unless (validar_estrategias mapa.values)
+#     @jugadores = mapa
+#   end
+#   
+#   def to_s
+#       @jugadores.to_s
+#   end
+#   
+#   private
+#   def validar_estrategias m
+#     esSub = true
+#     m.each {|x| @EsSub = @EsSub && val_tipo(x)}
+#     esSub
+#   end
+#   
+#   def val_tipo x
+#     es = false
+#     if (x.instance_of? Uniform) || (x.instance_of? Biased) || (x.instance_of? Mirror) || (x.instance_of? Smart)
+#       es = true
+#     end
+#     es
+#   end
+# end#Fin Match
+
+
+
+class Match 
+  attr_reader :mapa, :ronda
+  def initialize (mapa,ronda={})
+    if mapa.empty? then
+      raise "No puede ser vacio "
+    else
+      if mapa.length == 2 then
+        if self.chequeo(mapa.values[1]) and
+           self.chequeo(mapa.values[1]) then
+              @mapa = Hash.new
+              @ronda = Hash.new
+              @ronda = {"0"=> 0,"1" => 0,"Rondas" =>0}
+              @mapa = mapa
+        else
+          raise "No esta definida al menos una estrategia"
+        end
+      else
+        #No hay 2 jugadores exactos
+        raise "No hay 2 jugadores exactos"
+      end
+    end
   end
   
   def to_s
-      @jugadores.to_s
-  end
-  
-  private
-  def validar_estrategias m
-    esSub = true
-    m.each {|x| @EsSub = @EsSub && val_tipo(x)}
-    esSub
-  end
-  
-  def val_tipo x
-    es = false
-    if (x.instance_of? Uniform) || (x.instance_of? Biased) || (x.instance_of? Mirror) || (x.instance_of? Smart)
-      es = true
+    @mapa.each_pair do |key, value|
     end
-    es
   end
-end#Fin Match
+  
+  def chequeo m
+    if m.instance_of? Uniform or m.instance_of? Biased or m.instance_of? Mirror or m.instance_of? Smart
+      return true
+    end
+    false
+  end
+  
+  def rounds n
+    rondas = n
+    ptsacum1 = 0
+    ptsacum2 = 0
+    mov1 = Paper.new
+    mov2 = Rock.new
+    while n != 0 do
+      mov1 =  @mapa.values[0].next(mov2)
+      mov2 =  @mapa.values[1].next(mov1)
+      puts "mov1=" + mov1.to_s + " mov2=" + mov2.to_s
+      puntos = mov1.score(mov2)
+      ptsacum1 += puntos[0]
+      ptsacum2 += puntos[1]
+      n = n-1
+    end
+    ptsacum1 += @ronda.values[0]
+    ptsacum2 += @ronda.values[1]
+    rondas += @ronda.values[2]  
+    @ronda = {@mapa.keys[0] => ptsacum1, @mapa.keys[1] => ptsacum2, "Rondas" => rondas}
+    
+  end
+  
+   def upto n
+    rondas = 0
+    ptsacum1 = 0
+    ptsacum2 = 0
+    rondasaux = 0
+    while n != rondas do
+      mov1,mov2 = @mapa.values[0].next(mov2),@mapa.values[1].next(mov1)
+      puntos = mov1.score(mov2)
+      ptsacum1 += puntos[0]
+      ptsacum2 += puntos[1]
+      if ptsacum1 != ptsacum2 then
+        rondas += 1
+      end
+      rondasaux += 1
+    end
+    ptsacum1 += @ronda.values[0]
+    ptsacum2 += @ronda.values[1]
+    rondasaux += @ronda.values[2]
+    @ronda = {@mapa.keys[0] => ptsacum1, @mapa.keys[1] => ptsacum2, "Rondas" => rondasaux}
+    
+  end
+ 
+  def restart
+    @mapa.values[0].reset
+    @mapa.values[1].reset
+    @ronda = {"0"=> 0,"1" => 0,"Rondas" =>0}
+    "Juego Reiniciado"
+  end
+ 
+  
+end  
