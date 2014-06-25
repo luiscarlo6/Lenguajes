@@ -270,13 +270,13 @@ class Biased < Strategy
       cInf = 0
       cSup = arr.first
       while i < tam
-        if cInf <= num && num < cSup
-          return @estrategia.key arr[i]
-        end
-        arr = arr.rotate
-        cInf = cSup
-        cSup += arr.first
-        i += 1
+	if cInf <= num && num < cSup
+	  return @estrategia.key arr[i]
+	end
+	arr = arr.rotate
+	cInf = cSup
+	cSup += arr.first
+	i += 1
       end
     end
   end
@@ -322,13 +322,13 @@ class Mirror < Strategy
   
   # +estrategia+ : Contendrá la lista suministrada por el usuario
   attr_accessor :estrategia
-  # +original+   : Contendrá una copia de dicha lista
+  # +original+	 : Contendrá una copia de dicha lista
   attr_accessor :original
-  # +control+    : Boolean para determinar que jugar en la primera oportunidad
+  # +control+	 : Boolean para determinar que jugar en la primera oportunidad
   attr_accessor :control
-  # +anterior+   : Contendrá el ultimo movimiento del contrincante
+  # +anterior+	 : Contendrá el ultimo movimiento del contrincante
   attr_accessor :anterior
-  # +contNil+    : Variable de control, para saber la cantidad de nil
+  # +contNil+	 : Variable de control, para saber la cantidad de nil
   attr_accessor :contNil
   
   ##
@@ -354,17 +354,17 @@ class Mirror < Strategy
     
     if @contNil <2
       if m == nil
-        return @estrategia
+	return @estrategia
       end
       
       if @control
-        @control = false
-        @anterior = m
-        @estrategia
+	@control = false
+	@anterior = m
+	@estrategia
       else
-        @estrategia = @anterior
-        @anterior = m
-        @estrategia
+	@estrategia = @anterior
+	@anterior = m
+	@estrategia
       end
     end
   end
@@ -373,7 +373,7 @@ class Mirror < Strategy
   # Método to_s
   # Muestra el invocante como un String
   def to_s
-    self.class.name + "  Movimiento Inicial = " + @estrategia.to_s 
+    self.class.name + "	 Movimiento Inicial = " + @estrategia.to_s 
   end
   
   ##
@@ -394,11 +394,11 @@ end
 # de las jugadas realizadas por el usuario
 class Smart < Strategy
   
-  # +p+       : Cantidad de Paper jugadas por el contrincante
+  # +p+	      : Cantidad de Paper jugadas por el contrincante
   attr_accessor :p
-  # +r+       : Cantidad de Rock jugadas por el contrincante
+  # +r+	      : Cantidad de Rock jugadas por el contrincante
   attr_accessor :r
-  # +s+       : Cantidad de Scissors jugadas por el contrincante
+  # +s+	      : Cantidad de Scissors jugadas por el contrincante
   attr_accessor :s
   # +contNil+ : Variable de control, para saber la cantidad de nil
   attr_accessor :contNil
@@ -425,16 +425,16 @@ class Smart < Strategy
     
     if @contNil < 2
       if m==nil
-        return Scissors.new
+	return Scissors.new
       end
       sumar(m)
       num = rand(@p + @r + @s -1).to_int
       if (0 <= num) && (num < @p)
-        Scissors.new
+	Scissors.new
       elsif (@p <= num) && (num < @p+@r)
-        Paper.new
+	Paper.new
       elsif (@p+@r <= num) && (num < @p+@r+@s)
-        Rock.new
+	Rock.new
       end
     end
   end
@@ -443,7 +443,7 @@ class Smart < Strategy
   # Método to_s
   # Muestra el invocante como un String
   def to_s
-    self.class.name + "  p = " + @p.to_s + ", r = " + @r.to_s + ", s = " + @s.to_s 
+    self.class.name + "	 p = " + @p.to_s + ", r = " + @r.to_s + ", s = " + @s.to_s 
   end
   
   ##
@@ -481,18 +481,18 @@ end
 
 class Match
   
-  # +jugadores+   : mapa suministrado por el usuario
+  # +jugadores+	  : mapa suministrado por el usuario
   attr_accessor :jugadores
-  # +juego+       : mapa del juego creado a partir del mapa de jugadores
+  # +juego+	  : mapa del juego creado a partir del mapa de jugadores
   attr_accessor :juego
-  # +movJ1+       : movimiento del jugador uno
+  # +movJ1+	  : movimiento del jugador uno
   attr_accessor :movJ1
-  # +movJ2+       : movimiento del jugador dos
+  # +movJ2+	  : movimiento del jugador dos
   attr_accessor :movJ2
   
   ##
   # Método +initialize+
-  # Constructor  Match
+  # Constructor	 Match
   # +mapa: mapa suministrado por el usuario+
   def initialize mapa
     raise ArgumentError,'El mapa de los Jugadores no puede ser vacío' unless (not mapa.empty?)
@@ -556,17 +556,17 @@ class Match
     
     if (@juego[(@juego.keys[0])] < n) && @juego[(@juego.keys[1])] < n 
       while true
-        puntuacion = pm1.score(pm2)
-        @juego[(@juego.keys[0])] += puntuacion[0]
-        @juego[(@juego.keys[1])] += puntuacion[1]
-        @juego[(@juego.keys[2])] += 1
-        @movJ1 = @jugadores.values[0].next(pm2)
-        @movJ2 = @jugadores.values[1].next(pm1)
-        pm1 = @movJ1
-        pm2 = @movJ2
-        if @juego[(@juego.keys[0])] == n || @juego[(@juego.keys[1])] == n
-          break
-        end
+	puntuacion = pm1.score(pm2)
+	@juego[(@juego.keys[0])] += puntuacion[0]
+	@juego[(@juego.keys[1])] += puntuacion[1]
+	@juego[(@juego.keys[2])] += 1
+	@movJ1 = @jugadores.values[0].next(pm2)
+	@movJ2 = @jugadores.values[1].next(pm1)
+	pm1 = @movJ1
+	pm2 = @movJ2
+	if @juego[(@juego.keys[0])] == n || @juego[(@juego.keys[1])] == n
+	  break
+	end
       end
     else
       puts "Uno de los usuarios ya tiene una puntuación superior a " + n.to_s
