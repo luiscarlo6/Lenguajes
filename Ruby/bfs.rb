@@ -23,23 +23,23 @@ module BFS
   # encuentra retorna +objeto indefinido+
   def find(start,predicate)
     queue = [start] 
-    set   = [start] #Conjunto de elementos ya +visitados+
+    set	  = [start] #Conjunto de elementos ya +visitados+
     while not queue.empty?
       t = queue.shift
       if predicate.call(t.value)
-        return t
+	return t
       end
       t.each do |e|
-        if not set.include? e
-          set   << e
-          queue << e
-        end
+	if not set.include? e
+	  set	<< e
+	  queue << e
+	end
       end
     end
     return nil
   end
   
-
+  
   ##
   # Método path
   # Realiza una busqueda BFS a partir del objeto +start+ hasta encontrar el
@@ -48,24 +48,24 @@ module BFS
   # +objeto indefinido+
   def path(start,predicate)
     queue = [start]
-    set   = [start]             #Conjunto de elementos ya +visitados+
+    set	  = [start]		#Conjunto de elementos ya +visitados+
     roads = Hash[start,[start]] #Hash de caminos: nodo -> [nodo]
     while not queue.empty?
       t = queue.shift
       if predicate.call(t.value)
-        return roads[t]
+	return roads[t]
       end
       t.each do |e|
-        if not set.include? e
-          roads[e]  = roads[t] + [e]
-          set      << e
-          queue    << e
-        end
+	if not set.include? e
+	  roads[e]  = roads[t] + [e]
+	  set	   << e
+	  queue	   << e
+	end
       end 
     end
     return nil
   end
-
+  
   ##
   # Método walk
   # Realiza una busqueda BFS a partir del objeto +start+ hasta agotar todo el
@@ -74,21 +74,21 @@ module BFS
   # +Array+ con los nodos visitados
   def walk(start,action)
     queue = [start]
-    set   = [start]  #Conjunto de elementos ya +visitados+
+    set	  = [start]  #Conjunto de elementos ya +visitados+
     list  = []
     while not queue.empty?
       t = queue.shift
       begin
-        action.call(t.value)
-        list << t
+	action.call(t.value)
+	list << t
       rescue
-        return list
+	return list
       end      
       t.each do |e|
-        if not set.include? e
-          set   << e
-          queue << e
-        end
+	if not set.include? e
+	  set	<< e
+	  queue << e
+	end
       end 
     end
     return list
@@ -124,10 +124,10 @@ class BinTree
   def each(&b)
     if block_given? then
       if not @left.nil?
-        yield @left
+	yield @left
       end
       if not @right.nil? 
-        yield @right
+	yield @right
       end 
     else
       raise "No blocks given!"
@@ -140,8 +140,8 @@ end
 # Representa grafos arbitrarios a partir de un nodo específico
 class GraphNode
   include BFS
-
-
+  
+  
   # +children+: Arreglo de sucesores GraphNode
   attr_accessor :value
   # +value+   : Valor almacenado en el nodo
@@ -155,7 +155,7 @@ class GraphNode
     @value = v
     @children = c
   end
-
+  
   ##
   # Método each 
   # recibe un bloque +b+ que será utilizado para iterar sobre los hijos del nodo,
@@ -163,8 +163,8 @@ class GraphNode
   def each(&b)
     @children.each do |e|
       if not e.nil?
-        yield e
+	yield e
       end 
-    end unless @children.nil?    
+    end unless @children.nil?	 
   end
 end
