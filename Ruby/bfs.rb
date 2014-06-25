@@ -21,13 +21,20 @@ module BFS
   # Realiza una busqueda BFS a partir del objeto +start+ hasta encontrar el
   # primer objeto que cumpla con el predicado +predicate+, y lo retorna. Si no
   # encuentra retorna +objeto indefinido+
-  def find(start,predicate)
+  def find(start,predicate=nil)
+    if not predicate.is_a? Proc and not block_given?
+      puts "Debe proporcionar un bloque o un Proc"
+      return nil
+    end
     queue = [start] 
     set   = [start] #Conjunto de elementos ya +visitados+
     while not queue.empty?
       t = queue.shift
-      if predicate.call(t.value)
+      if (predicate.is_a? Proc) and predicate.call(t.value)
         return t
+      end
+      if block_given? and yield t.value
+          return t
       end
       t.each do |e|
         if not set.include? e
@@ -46,13 +53,20 @@ module BFS
   # primer objeto que cumpla con el predicado +predicate+. Retorna el camino
   # desde +start+ hasta el objeto encontrado. Si no encuentra retorna
   # +objeto indefinido+
-  def path(start,predicate)
+  def path(start,predicate=nil)
+    if not predicate.is_a? Proc and not block_given?
+      puts "Debe proporcionar un bloque o un Proc"
+      return nil
+    end
     queue = [start]
     set   = [start]             #Conjunto de elementos ya +visitados+
     roads = Hash[start,[start]] #Hash de caminos: nodo -> [nodo]
     while not queue.empty?
       t = queue.shift
-      if predicate.call(t.value)
+      if (predicate.is_a? Proc) and predicate.call(t.value)
+        return roads[t]
+      end
+      if block_given? and yield t.value
         return roads[t]
       end
       t.each do |e|
@@ -72,14 +86,23 @@ module BFS
   # espacio de búsqueda, ejecutando +action+ sobre cada nodo visitado. Retorna
   # un +Array+ con los los nodos visitados. Si se omite +action+ retorna un
   # +Array+ con los nodos visitados
-  def walk(start,action)
+  def walk(start,action=nil)
+    if not action.is_a? Proc and not block_given?
+      puts "Debe proporcionar un bloque o un Proc"
+      return nil
+    end
     queue = [start]
     set   = [start]  #Conjunto de elementos ya +visitados+
     list  = []
     while not queue.empty?
       t = queue.shift
       begin
-        action.call(t.value)
+        if (action.is_a? Proc)
+          action.call(t.value)
+        end
+        if block_given?
+          yield t.value
+        end
         list << t
       rescue
         return list
@@ -121,7 +144,11 @@ class BinTree
   # Método each 
   # recibe un bloque +b+ que será utilizado para iterar sobre los hijos del nodo,
   # cuando estén definidos
-  def each(&b)
+  def each(b=nil)
+    if not b.is_a? Proc and not block_given?
+      puts "Debe proporcionar un bloque o un Proc"
+      return nil
+    end
     if block_given? then
       if not @left.nil?
         yield @left
@@ -129,8 +156,13 @@ class BinTree
       if not @right.nil? 
         yield @right
       end 
-    else
-      raise "No blocks given!"
+    elsif b.is_a? Proc then
+      if not @left.nil?
+        b.call(@left)
+      end
+      if not @right.nil? 
+        b.call(@right)
+      end 
     end
   end
 end
@@ -160,11 +192,19 @@ class GraphNode
   # Método each 
   # recibe un bloque +b+ que será utilizado para iterar sobre los hijos del nodo,
   # cuando estén definidos  
-  def each(&b)
+  def each(b=nil)
+    if not b.is_a? Proc and not block_given?
+      puts "Debe proporcionar un bloque o un Proc"
+      return nil
+    end
     @children.each do |e|
-      if not e.nil?
-        yield e
-      end 
+      if not e.nil? 
+        if block_given? then
+          yield e
+        elsif b.is_a? Proc
+          b.call(e)
+        end
+      end
     end unless @children.nil?    
   end
 end
